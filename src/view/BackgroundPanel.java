@@ -5,9 +5,6 @@
  */
 package view;
 
-import java.awt.Graphics;
-import javax.swing.ImageIcon;
-
 /**
  *
  * @author Yan Kaic
@@ -15,18 +12,10 @@ import javax.swing.ImageIcon;
 public class BackgroundPanel extends javax.swing.JPanel {
 
   /**
-   * Creates new form NovoJPanel
+   * Creates new form BackgroundPanel
    */
   public BackgroundPanel() {
     initComponents();
-  }
-  
-  @Override
-  public void paintComponent(Graphics g){
-    super.paintComponent(g);
-    ImageIcon img = new ImageIcon(getClass().getResource("/images/background.jpg"));
-    g.drawImage(img.getImage(), getPreferredSize().width, getHeight(), null);
-    g.drawLine(0, 0, getWidth(), getHeight());
   }
 
   /**
@@ -40,10 +29,10 @@ public class BackgroundPanel extends javax.swing.JPanel {
 
     jLabel1 = new javax.swing.JLabel();
 
-    setLayout(new java.awt.BorderLayout());
+    setLayout(new javax.swing.BoxLayout(this, javax.swing.BoxLayout.LINE_AXIS));
 
-    jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/background.jpg"))); // NOI18N
-    add(jLabel1, java.awt.BorderLayout.CENTER);
+    jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/background.png"))); // NOI18N
+    add(jLabel1);
   }// </editor-fold>//GEN-END:initComponents
 
 

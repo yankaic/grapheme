@@ -5,24 +5,19 @@
  */
 package view;
 
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.Image;
-import javax.swing.ImageIcon;
-
 /**
  *
  * @author Yan Kaic
  */
-public class Swipe extends javax.swing.JFrame {
+public class SwipeView extends javax.swing.JFrame {
 
   /**
-   * Creates new form Swipe
+   * Creates new form SwipeView
    */
-  public Swipe() {
+  public SwipeView() {
     initComponents();
+    setLocationRelativeTo(null);
   }
-  
 
   /**
    * This method is called from within the constructor to initialize the form.
@@ -33,48 +28,47 @@ public class Swipe extends javax.swing.JFrame {
   // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
   private void initComponents() {
 
-    backgroundPanel = new javax.swing.JPanel();
+    workPanel = new javax.swing.JPanel();
+    tvLabel = new javax.swing.JLabel();
     jPanel1 = new javax.swing.JPanel();
-    jLabel1 = new javax.swing.JLabel();
-    jPanel2 = new javax.swing.JPanel();
     jLabel2 = new javax.swing.JLabel();
-    novoJPanel1 = new view.BackgroundPanel();
+    backgroundPanel2 = new view.BackgroundPanel();
 
     setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-    setTitle("Grafemas");
-    setMinimumSize(new java.awt.Dimension(800, 600));
+    setMaximumSize(new java.awt.Dimension(900, 600));
+    setMinimumSize(new java.awt.Dimension(900, 600));
     setResizable(false);
+    getContentPane().setLayout(new javax.swing.OverlayLayout(getContentPane()));
 
-    backgroundPanel.setLayout(new javax.swing.OverlayLayout(backgroundPanel));
+    workPanel.setBorder(javax.swing.BorderFactory.createEmptyBorder(25, 20, 25, 20));
+    workPanel.setOpaque(false);
+    workPanel.setLayout(new java.awt.BorderLayout());
 
-    jPanel1.setBorder(javax.swing.BorderFactory.createEmptyBorder(40, 5, 40, 5));
-    jPanel1.setOpaque(false);
-    jPanel1.setLayout(new java.awt.BorderLayout());
+    tvLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/table.png"))); // NOI18N
+    workPanel.add(tvLabel, java.awt.BorderLayout.CENTER);
 
-    jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/table.png"))); // NOI18N
-    jPanel1.add(jLabel1, java.awt.BorderLayout.CENTER);
+    jPanel1.setBackground(new java.awt.Color(234, 227, 212));
+    jPanel1.setPreferredSize(new java.awt.Dimension(860, 130));
 
-    javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-    jPanel2.setLayout(jPanel2Layout);
-    jPanel2Layout.setHorizontalGroup(
-      jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addGap(0, 849, Short.MAX_VALUE)
+    javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+    jPanel1.setLayout(jPanel1Layout);
+    jPanel1Layout.setHorizontalGroup(
+      jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+      .addGap(0, 860, Short.MAX_VALUE)
     );
-    jPanel2Layout.setVerticalGroup(
-      jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addGap(0, 100, Short.MAX_VALUE)
+    jPanel1Layout.setVerticalGroup(
+      jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+      .addGap(0, 130, Short.MAX_VALUE)
     );
 
-    jPanel1.add(jPanel2, java.awt.BorderLayout.PAGE_END);
+    workPanel.add(jPanel1, java.awt.BorderLayout.PAGE_END);
 
     jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/tv.png"))); // NOI18N
     jLabel2.setVerticalAlignment(javax.swing.SwingConstants.TOP);
-    jPanel1.add(jLabel2, java.awt.BorderLayout.LINE_END);
+    workPanel.add(jLabel2, java.awt.BorderLayout.LINE_END);
 
-    backgroundPanel.add(jPanel1);
-    backgroundPanel.add(novoJPanel1);
-
-    getContentPane().add(backgroundPanel, java.awt.BorderLayout.CENTER);
+    getContentPane().add(workPanel);
+    getContentPane().add(backgroundPanel2);
 
     pack();
   }// </editor-fold>//GEN-END:initComponents
@@ -97,33 +91,32 @@ public class Swipe extends javax.swing.JFrame {
       }
     }
     catch (ClassNotFoundException ex) {
-      java.util.logging.Logger.getLogger(Swipe.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+      java.util.logging.Logger.getLogger(SwipeView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
     }
     catch (InstantiationException ex) {
-      java.util.logging.Logger.getLogger(Swipe.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+      java.util.logging.Logger.getLogger(SwipeView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
     }
     catch (IllegalAccessException ex) {
-      java.util.logging.Logger.getLogger(Swipe.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+      java.util.logging.Logger.getLogger(SwipeView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
     }
     catch (javax.swing.UnsupportedLookAndFeelException ex) {
-      java.util.logging.Logger.getLogger(Swipe.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+      java.util.logging.Logger.getLogger(SwipeView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
     }
     //</editor-fold>
 
     /* Create and display the form */
     java.awt.EventQueue.invokeLater(new Runnable() {
       public void run() {
-        new Swipe().setVisible(true);
+        new SwipeView().setVisible(true);
       }
     });
   }
 
   // Variables declaration - do not modify//GEN-BEGIN:variables
-  private javax.swing.JPanel backgroundPanel;
-  private javax.swing.JLabel jLabel1;
+  private view.BackgroundPanel backgroundPanel2;
   private javax.swing.JLabel jLabel2;
   private javax.swing.JPanel jPanel1;
-  private javax.swing.JPanel jPanel2;
-  private view.BackgroundPanel novoJPanel1;
+  private javax.swing.JLabel tvLabel;
+  private javax.swing.JPanel workPanel;
   // End of variables declaration//GEN-END:variables
 }
