@@ -89,7 +89,7 @@ public class Translation extends Thread {
                 adjacentCateto = (int) (cosine * variableHypotenuse) + startPoint.x;
                 oppositiveCateto = (int) (sine * variableHypotenuse) + startPoint.y;
                 object.setLocation((int)adjacentCateto, (int)oppositiveCateto);
-                sleep(20);
+                sleep(100/6);
 
             }
             //coloca o objeto no ponto final que foi pedido.
