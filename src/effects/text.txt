@@ -1,0 +1,3 @@
+-Animação de translação e centralização
+-Animação de redimensionamento
+-
