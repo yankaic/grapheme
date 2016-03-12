@@ -1,5 +1,6 @@
 package effects;
 
+import entities.GameObject;
 import java.awt.Color;
 import java.awt.Point;
 import java.util.concurrent.Semaphore;
@@ -18,7 +19,7 @@ import javax.swing.JComponent;
  */
 public class Translation extends Thread {
 
-  private final JComponent object;
+  private final GameObject object;
   private final Point startPoint;
   private final Point distance;
   private final double sine;
@@ -42,7 +43,7 @@ public class Translation extends Thread {
    * @param endPoint ponto que o objeto vai ficar quando a animacao terminar.
    * @param time long: tempo da animação em millisegundos
    */
-  public Translation(JComponent object, Point endPoint, long time) {
+  public Translation(GameObject object, Point endPoint, long time) {
     this.object = object;
     startPoint = object.getLocation();
 
@@ -70,17 +71,16 @@ public class Translation extends Thread {
       }
       mutex.release();
 
-      object.setBorder(BorderFactory.createLineBorder(Color.red, 2));
       sleep(500);
 
       double adjacentCateto = (cosine * speed);
       double oppositiveCateto = (sine * speed);
 
-      for (int hoop = 0; hoop < hypotenuse; hoop += speed) {
-        double x = adjacentCateto + object.getX();
-        double y = oppositiveCateto + object.getY();
-        System.out.println(object.getLocation());
-        object.setLocation((int) x, (int) y);
+      for (double hoop = 0; hoop < hypotenuse; hoop += speed) {
+        double x = adjacentCateto + object.getXF();
+        double y = oppositiveCateto + object.getYF();
+        System.out.println("X: "+object.getXF()+"\tY: "+object.getYF());
+        object.setLocation(x, y);
         sleep(100 / 6);
       }//fim for
 
@@ -96,11 +96,10 @@ public class Translation extends Thread {
       //coloca o objeto no ponto final que foi pedido.
       adjacentCateto = (cosine * hypotenuse) + startPoint.x;
       oppositiveCateto = (sine * hypotenuse) + startPoint.y;
-      object.setLocation((int) adjacentCateto, (int) oppositiveCateto);
+      object.setLocation( adjacentCateto, oppositiveCateto);
       System.out.println(object.getLocation());
 
       sleep(500);
-      object.setBorder(BorderFactory.createEmptyBorder());
       if (self) {
         aniMutex.release();
         anitag = false;
@@ -120,7 +119,7 @@ public class Translation extends Thread {
    * @param destino ponto que deseja que o objeto fique depois da animacao.
    * @param time long : tempo da animação em milissegundos
    */
-  public static void moveObject(JComponent objeto, Point destino, long time) {
+  public static void moveObject(GameObject objeto, Point destino, long time) {
     Translation animacao = new Translation(objeto, destino, time);
     animacao.start();
   }//fim moveObject
