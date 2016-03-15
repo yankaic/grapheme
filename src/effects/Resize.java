@@ -53,11 +53,9 @@ public class Resize extends Thread {
     distance.width = endPoint.width - startPoint.width;
     distance.height = endPoint.height - startPoint.height;
     
-    (new Rectangle()).
-
-    hypotenuse = startPoint.distance(endPoint);
-    sine = distance.y / hypotenuse;
-    cosine = distance.x / hypotenuse;
+    hypotenuse = Math.sqrt(Math.pow(distance.width, 2) + Math.pow(distance.height, 2));
+    sine = distance.height / hypotenuse;
+    cosine = distance.width / hypotenuse;
     
     this.speed=(hypotenuse*100)/(time*6);
   }//fim construtor
@@ -80,16 +78,16 @@ public class Resize extends Thread {
       //Vai aumentando a distancia e descobrindo seus pontos x e y.
       for (int variableHypotenuse = 0; variableHypotenuse < hypotenuse; variableHypotenuse += speed) {
 
-        int AdjacentCateto = (int) (cosine * variableHypotenuse) + startPoint.x;
-        int OppositiveCateto = (int) (sine * variableHypotenuse) + startPoint.y;
-        object.setLocation(AdjacentCateto, OppositiveCateto);
+        int AdjacentCateto = (int) (cosine * variableHypotenuse) + startPoint.width;
+        int OppositiveCateto = (int) (sine * variableHypotenuse) + startPoint.height;
+        object.paintImmediately(object.getLocation().x, object.getLocation().y, AdjacentCateto, OppositiveCateto);
         sleep(20);
 
       }
       //coloca o objeto no ponto final que foi pedido.
-      int adjacentCateto = (int) (cosine * hypotenuse) + startPoint.x;
-      int oppositiveCateto = (int) (sine * hypotenuse) + startPoint.y;
-      object.setLocation(adjacentCateto, oppositiveCateto);
+      int adjacentCateto = (int) (cosine * hypotenuse) + startPoint.width;
+      int oppositiveCateto = (int) (sine * hypotenuse) + startPoint.height;
+      object.paintImmediately(object.getLocation().x, object.getLocation().y, adjacentCateto, oppositiveCateto);
 
       sleep(500);
       object.setBorder(BorderFactory.createEmptyBorder());
