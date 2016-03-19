@@ -5,6 +5,7 @@
  */
 package test;
 
+import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
 /**
@@ -12,5 +13,14 @@ import javax.swing.JLabel;
  * @author Yan Kaic
  */
 public class Label_Iago extends JLabel{
+
+  public Label_Iago() {
+    init();
+  }
+  
+  public void init(){
+    ImageIcon icon = (ImageIcon) getIcon();
+    icon.getImage();
+  }
   
 }

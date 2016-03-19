@@ -1,6 +1,7 @@
 
 package view.components;
 
+import java.awt.Graphics;
 import javax.swing.JLabel;
 
 /**
@@ -14,5 +15,9 @@ public class Letter extends JLabel{
 
   private void init() {
     
+  }
+  
+  @Override
+  public void paintComponent(Graphics gph){
   }
 }

@@ -98,6 +98,7 @@ public class Translation extends Thread {
       oppositiveCateto = (sine * hypotenuse) + startPoint.y;
       object.setLocation( adjacentCateto, oppositiveCateto);
       System.out.println(object.getLocation());
+      
 
       sleep(500);
       if (self) {
