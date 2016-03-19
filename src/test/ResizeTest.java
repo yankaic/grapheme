@@ -33,15 +33,27 @@ public class ResizeTest extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new GameLabel();
+        panel = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setMinimumSize(new java.awt.Dimension(600, 600));
+        setMinimumSize(new java.awt.Dimension(500, 500));
+        getContentPane().setLayout(null);
 
-        jLabel1.setBackground(new java.awt.Color(255, 0, 31));
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/lettes/õ/lowercase/examples/3/image.png"))); // NOI18N
-        jLabel1.setOpaque(true);
-        getContentPane().add(jLabel1, java.awt.BorderLayout.PAGE_START);
+        panel.setBackground(new java.awt.Color(232, 3, 3));
+
+        javax.swing.GroupLayout panelLayout = new javax.swing.GroupLayout(panel);
+        panel.setLayout(panelLayout);
+        panelLayout.setHorizontalGroup(
+            panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+        panelLayout.setVerticalGroup(
+            panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+
+        getContentPane().add(panel);
+        panel.setBounds(190, 120, 100, 100);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -83,6 +95,6 @@ public class ResizeTest extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JPanel panel;
     // End of variables declaration//GEN-END:variables
 }
