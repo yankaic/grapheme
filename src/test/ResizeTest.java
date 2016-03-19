@@ -6,6 +6,8 @@
 package test;
 
 import effects.Resize;
+import entities.GameLabel;
+import java.awt.Dimension;
 import java.awt.Point;
 
 /**
@@ -19,7 +21,7 @@ public class ResizeTest extends javax.swing.JFrame {
      */
     public ResizeTest() {
         initComponents();
-        Resize.moveObject(panel, new Point(0, 0),2000);
+        Resize.resizeObject(panel, new Dimension(200,200),2000);
     }
 
     /**
@@ -31,25 +33,15 @@ public class ResizeTest extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        panel = new javax.swing.JPanel();
+        jLabel1 = new GameLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        setMinimumSize(new java.awt.Dimension(600, 600));
 
-        panel.setBackground(new java.awt.Color(44, 22, 253));
-
-        javax.swing.GroupLayout panelLayout = new javax.swing.GroupLayout(panel);
-        panel.setLayout(panelLayout);
-        panelLayout.setHorizontalGroup(
-            panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 70, Short.MAX_VALUE)
-        );
-        panelLayout.setVerticalGroup(
-            panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 56, Short.MAX_VALUE)
-        );
-
-        getContentPane().add(panel, new org.netbeans.lib.awtextra.AbsoluteConstraints(488, 317, -1, -1));
+        jLabel1.setBackground(new java.awt.Color(255, 0, 31));
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/lettes/õ/lowercase/examples/3/image.png"))); // NOI18N
+        jLabel1.setOpaque(true);
+        getContentPane().add(jLabel1, java.awt.BorderLayout.PAGE_START);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -91,6 +83,6 @@ public class ResizeTest extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPanel panel;
+    private javax.swing.JLabel jLabel1;
     // End of variables declaration//GEN-END:variables
 }
