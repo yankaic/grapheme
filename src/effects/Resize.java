@@ -1,14 +1,11 @@
 package effects;
 
-import java.awt.Color;
+import entities.GameObject;
 import java.awt.Dimension;
-import java.awt.Point;
-import java.awt.Rectangle;
 import static java.lang.Thread.sleep;
 import java.util.concurrent.Semaphore;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.BorderFactory;
 import javax.swing.JComponent;
 
 /**
@@ -21,7 +18,7 @@ import javax.swing.JComponent;
  */
 public class Resize extends Thread {
 
-  private final JComponent object;
+  private final GameObject object;
   private final Dimension startPoint;
   private final Dimension distance;
   private final double sine;
@@ -45,7 +42,7 @@ public class Resize extends Thread {
    * @param endPoint ponto que o objeto vai ficar quando a animacao terminar.
    * @param time long: tempo da animação em millisegundos
    */
-  public Resize(JComponent object, Dimension endPoint, long time) {
+  public Resize(GameObject object, Dimension endPoint, long time) {
     this.object = object;
     startPoint = object.getSize();
 
@@ -72,25 +69,22 @@ public class Resize extends Thread {
       }
       mutex.release();
 
-      object.setBorder(BorderFactory.createLineBorder(Color.red, 2));
-      sleep(500);
+      double adjacentCateto=cosine*speed,
+             oppositiveCateto=sine*speed;
 
       //Vai aumentando a distancia e descobrindo seus pontos x e y.
-      for (int variableHypotenuse = 0; variableHypotenuse < hypotenuse; variableHypotenuse += speed) {
+      for (double variableHypotenuse = 0; variableHypotenuse < hypotenuse; variableHypotenuse += speed) {
 
-        int AdjacentCateto = (int) (cosine * variableHypotenuse) + startPoint.width;
-        int OppositiveCateto = (int) (sine * variableHypotenuse) + startPoint.height;
-        object.paintImmediately(object.getLocation().x, object.getLocation().y, AdjacentCateto, OppositiveCateto);
+        double w =adjacentCateto + object.getWidthF();
+        double h =oppositiveCateto + object.getHeightF();
+        object.setSize(w, h);
         sleep(20);
-
       }
       //coloca o objeto no ponto final que foi pedido.
-      int adjacentCateto = (int) (cosine * hypotenuse) + startPoint.width;
-      int oppositiveCateto = (int) (sine * hypotenuse) + startPoint.height;
-      object.paintImmediately(object.getLocation().x, object.getLocation().y, adjacentCateto, oppositiveCateto);
+      adjacentCateto =  (cosine * hypotenuse) + startPoint.width;
+      oppositiveCateto =  (sine * hypotenuse) + startPoint.height;
+      //object.paintImmediately(object.getLocation().x, object.getLocation().y,(int) adjacentCateto,(int) oppositiveCateto);
 
-      sleep(500);
-      object.setBorder(BorderFactory.createEmptyBorder());
       if (self) {
         aniMutex.release();
         anitag = false;
@@ -102,16 +96,22 @@ public class Resize extends Thread {
   }
 
   /**
-   * Esta funcao permite que um objeto seja movimento sem precisar instanciar o
-   * objeto animacao dentro do seu codigo. Basta inserir o objeto e ponto final
+   * Esta funcao permite que um objeto seja redimensionado sem precisar instanciar o
+   * objeto animacao dentro do seu codigo. Basta inserir o objeto e novo tamanho
    * desejado. Nota: observe a velocidade antes de usar esta funcao.
    *
-   * @param objeto objeto a ser movido
-   * @param destino ponto que deseja que o objeto fique depois da animacao.
+   * @param objeto JComponent : objeto a ser redimensionado
+   * @param newSize Dimension: novo tamanho do objeto
    * @param time  long : tempo da animação em milissegundos
+   * 
+   * zxas
+   * a
+   * sa
+   * s
+   * a
    */
-  public static void moveObject(JComponent objeto, Point destino, long time) {
-    Translation animacao = new Translation(objeto, destino, time);
+  public static void resizeObject(JComponent objeto, Dimension newSize, long time) {
+    Resize animacao = new Resize(new GameObject(objeto), newSize, time);
     animacao.start();
   }//fim moveObject
 
