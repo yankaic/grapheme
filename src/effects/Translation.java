@@ -1,13 +1,10 @@
 package effects;
 
 import entities.GameObject;
-import java.awt.Color;
 import java.awt.Point;
 import java.util.concurrent.Semaphore;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.BorderFactory;
-import javax.swing.JComponent;
 
 /**
  * Classe para movimentacao de qualquer JComponent (JPanel, JLabel, etc.) de uma

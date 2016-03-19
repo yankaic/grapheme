@@ -34,10 +34,8 @@ public class ResizeTest extends javax.swing.JFrame {
     private void initComponents() {
 
         panel = new javax.swing.JPanel();
-
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setMinimumSize(new java.awt.Dimension(500, 500));
-        getContentPane().setLayout(null);
+        jPanel1 = new javax.swing.JPanel();
+        jLabel1 = new GameLabel();
 
         panel.setBackground(new java.awt.Color(232, 3, 3));
 
@@ -52,11 +50,31 @@ public class ResizeTest extends javax.swing.JFrame {
             .addGap(0, 100, Short.MAX_VALUE)
         );
 
-        getContentPane().add(panel);
-        panel.setBounds(190, 120, 100, 100);
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setMinimumSize(new java.awt.Dimension(100, 100));
+
+        jPanel1.addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentResized(java.awt.event.ComponentEvent evt) {
+                jPanel1ComponentResized(evt);
+            }
+        });
+        jPanel1.setLayout(new java.awt.BorderLayout());
+
+        jLabel1.setBackground(new java.awt.Color(201, 171, 118));
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/lettes/õ/lowercase/examples/3/image.png"))); // NOI18N
+        jLabel1.setOpaque(true);
+        jPanel1.add(jLabel1, java.awt.BorderLayout.CENTER);
+
+        getContentPane().add(jPanel1, java.awt.BorderLayout.CENTER);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jPanel1ComponentResized(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_jPanel1ComponentResized
+      
+        
+    }//GEN-LAST:event_jPanel1ComponentResized
 
     /**
      * @param args the command line arguments
@@ -95,6 +113,8 @@ public class ResizeTest extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel panel;
     // End of variables declaration//GEN-END:variables
 }

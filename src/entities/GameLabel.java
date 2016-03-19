@@ -25,7 +25,26 @@ public class GameLabel extends JLabel{
         graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         
         ImageIcon icon = (ImageIcon) getIcon();
-        graphics.drawImage(icon.getImage(), 0, 0, this.getWidth(), this.getHeight(), this);               
+        double w = icon.getIconWidth();
+        double h = icon.getIconHeight();
+        double pImg = w/h;
+        double width = this.getWidth();
+        double height = this.getHeight();
+        double pLabel = width/height;
+        
+        
+        if(pImg<pLabel){
+            h=this.getHeight();
+            w=h*pImg;
+        }else if(pImg > pLabel){
+            w=this.getWidth();
+            h=w/pImg;
+        }else{
+            w=this.getWidth();
+            h=this.getHeight();
+        }//fim if-else
+        
+        graphics.drawImage(icon.getImage(), 0, 0, (int) w, (int)h, this);               
     }//fim paintComponent
     
 }//fim class
