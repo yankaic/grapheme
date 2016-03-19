@@ -13,6 +13,8 @@ public class GameObject extends Component {
 
   private double X;
   private double Y;
+  private double WIDTH;
+  private double HEIGHT;
   private final JComponent object;
 
   public GameObject(JComponent original) {
@@ -20,7 +22,9 @@ public class GameObject extends Component {
     Point location = getLocation();
     this.X = location.getX();
     this.Y = location.getY();
-  }
+    this.WIDTH = original.getSize().width;
+    this.HEIGHT = original.getSize().height;
+  }//fim Construtor
 
   public double getXF() {
     return X;
@@ -30,6 +34,14 @@ public class GameObject extends Component {
     return Y;
   }
   
+  public double getWidthF(){
+      return WIDTH;
+  }
+  
+  public double getHeightF(){
+      return HEIGHT;
+  }
+   
   @Override
   public int getX(){
     return object.getX();
@@ -50,6 +62,12 @@ public class GameObject extends Component {
     this.X = x;
     this.Y = y;
     object.setLocation(((int) x), ((int) y));
+  }
+  
+  public void setSize(double w, double h){
+      this.WIDTH=w;
+      this.HEIGHT=h;
+      object.setSize((int)w, (int)h);
   }
 
 }
