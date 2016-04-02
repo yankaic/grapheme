@@ -28,6 +28,7 @@ public class SwipeView extends javax.swing.JFrame {
   // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
   private void initComponents() {
 
+    jPanel2 = new javax.swing.JPanel();
     workPanel = new javax.swing.JPanel();
     tvLabel = new javax.swing.JLabel();
     jPanel1 = new javax.swing.JPanel();
@@ -39,6 +40,21 @@ public class SwipeView extends javax.swing.JFrame {
     setMinimumSize(new java.awt.Dimension(900, 600));
     setResizable(false);
     getContentPane().setLayout(new javax.swing.OverlayLayout(getContentPane()));
+
+    jPanel2.setBackground(new java.awt.Color(0, 0, 0));
+
+    javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+    jPanel2.setLayout(jPanel2Layout);
+    jPanel2Layout.setHorizontalGroup(
+      jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+      .addGap(0, 900, Short.MAX_VALUE)
+    );
+    jPanel2Layout.setVerticalGroup(
+      jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+      .addGap(0, 600, Short.MAX_VALUE)
+    );
+
+    getContentPane().add(jPanel2);
 
     workPanel.setBorder(javax.swing.BorderFactory.createEmptyBorder(25, 20, 25, 20));
     workPanel.setOpaque(false);
@@ -116,6 +132,7 @@ public class SwipeView extends javax.swing.JFrame {
   private view.BackgroundPanel backgroundPanel2;
   private javax.swing.JLabel jLabel2;
   private javax.swing.JPanel jPanel1;
+  private javax.swing.JPanel jPanel2;
   private javax.swing.JLabel tvLabel;
   private javax.swing.JPanel workPanel;
   // End of variables declaration//GEN-END:variables

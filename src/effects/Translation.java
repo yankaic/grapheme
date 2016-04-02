@@ -56,7 +56,6 @@ public class Translation extends Thread {
     cosine = distance.x / hypotenuse;
 
     this.speed = (hypotenuse * 100) / (time * 6);
-    System.out.println("H=" + hypotenuse + " S=" + speed);
   }//fim construtor
 
   @Override
@@ -71,7 +70,6 @@ public class Translation extends Thread {
       }
       mutex.release();
 
-      sleep(500);
 
       double adjacentCateto = (cosine * speed);
       double oppositiveCateto = (sine * speed);
@@ -79,7 +77,6 @@ public class Translation extends Thread {
       for (double hoop = 0; hoop < hypotenuse; hoop += speed) {
         double x = adjacentCateto + object.getXF();
         double y = oppositiveCateto + object.getYF();
-        System.out.println("X: "+object.getXF()+"\tY: "+object.getYF());
         object.setLocation(x, y);
         sleep(100 / 6);
       }//fim for
@@ -97,10 +94,8 @@ public class Translation extends Thread {
       adjacentCateto = (cosine * hypotenuse) + startPoint.x;
       oppositiveCateto = (sine * hypotenuse) + startPoint.y;
       object.setLocation( adjacentCateto, oppositiveCateto);
-      System.out.println(object.getLocation());
       
 
-      sleep(500);
       if (self) {
         aniMutex.release();
         anitag = false;
