@@ -3,7 +3,9 @@ package entities;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.Rectangle;
 import java.awt.RenderingHints;
+import java.util.Observer;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
@@ -31,7 +33,7 @@ public class GameLabel extends JLabel{
         double width = this.getWidth();
         double height = this.getHeight();
         double pLabel = width/height;
-        
+     
         
         if(pImg<pLabel){
             h=this.getHeight();

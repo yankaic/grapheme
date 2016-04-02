@@ -74,11 +74,10 @@ public class Resize extends Thread {
 
       //Vai aumentando a distancia e descobrindo seus pontos x e y.
       for (double variableHypotenuse = 0; variableHypotenuse < hypotenuse; variableHypotenuse += speed) {
-
         double w =adjacentCateto + object.getWidthF();
         double h =oppositiveCateto + object.getHeightF();
         object.setSize(w, h);
-        sleep(20);
+        sleep(100/6);
       }
       //coloca o objeto no ponto final que foi pedido.
       adjacentCateto =  (cosine * hypotenuse) + startPoint.width;
@@ -114,5 +113,6 @@ public class Resize extends Thread {
     Resize animacao = new Resize(new GameObject(objeto), newSize, time);
     animacao.start();
   }//fim moveObject
+
 
 }//fim class

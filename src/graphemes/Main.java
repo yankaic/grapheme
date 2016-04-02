@@ -5,6 +5,11 @@
  */
 package graphemes;
 
+import entities.Controller;
+import entities.RandomSort;
+import java.io.File;
+import java.util.Collections;
+import test.FadeTest;
 import test.ResizeTest;
 import test.TranslationTest;
 import view.SwipeView;
@@ -19,7 +24,8 @@ public class Main {
    * @param args the command line arguments
    */
   public static void main(String[] args) {
-    new ResizeTest().setVisible(true);
+      Controller c = new Controller();
+       //new FadeTest().setVisible(true);
   }
   
 }
