@@ -1,8 +1,12 @@
 package entities;
 
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Point;
+import java.awt.RenderingHints;
 import javax.swing.JComponent;
 
 /**
@@ -15,6 +19,7 @@ public class GameObject extends Component {
   private double Y;
   private double WIDTH;
   private double HEIGHT;
+  private double ALPHA;
   private final JComponent object;
 
   public GameObject(JComponent original) {
@@ -24,6 +29,7 @@ public class GameObject extends Component {
     this.Y = location.getY();
     this.WIDTH = original.getSize().width;
     this.HEIGHT = original.getSize().height;
+    this.ALPHA = original.getBackground().getAlpha();
   }//fim Construtor
 
   public double getXF() {
@@ -41,7 +47,21 @@ public class GameObject extends Component {
   public double getHeightF(){
       return HEIGHT;
   }
-   
+
+  public void setAlpha(double alpha){
+      this.ALPHA=alpha;
+  }
+  
+  public double getAlpha(){
+      return this.ALPHA;
+  }
+         
+  public Color getColorBackgroud(){
+      return object.getBackground();
+  }
+ 
+  
+  
   @Override
   public int getX(){
     return object.getX();
@@ -57,6 +77,9 @@ public class GameObject extends Component {
     return object.getSize();
   }
   
+  public JComponent getComponent(){
+      return object;
+  }
   
   public void setLocation(double x, double y) {
     this.X = x;

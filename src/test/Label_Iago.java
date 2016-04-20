@@ -19,8 +19,8 @@ public class Label_Iago extends JLabel{
   }
   
   public void init(){
-    ImageIcon icon = (ImageIcon) getIcon();
-    icon.getImage();
+//    ImageIcon icon = (ImageIcon) getIcon();
+//    icon.getImage();
   }
   
 }

@@ -5,8 +5,10 @@
  */
 package test;
 
+import effects.Resize;
 import effects.Translation;
 import entities.GameObject;
+import java.awt.Dimension;
 import java.awt.Point;
 
 /**
@@ -20,7 +22,8 @@ public class TranslationTest extends javax.swing.JFrame {
      */
     public TranslationTest() {
         initComponents();
-        Translation.moveObject(new GameObject(panel), new Point(100, 100),1000);
+        Translation.moveObject(new GameObject(panel), new Point(getWidth()/2-200, getHeight()/2-230),500);
+        Resize.resizeObject(panel, new Dimension(400, 400), 500);
     }
 
     /**
@@ -51,7 +54,7 @@ public class TranslationTest extends javax.swing.JFrame {
       .addGap(0, 56, Short.MAX_VALUE)
     );
 
-    getContentPane().add(panel, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 380, -1, -1));
+    getContentPane().add(panel, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 20, -1, -1));
 
     pack();
   }// </editor-fold>//GEN-END:initComponents

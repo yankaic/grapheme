@@ -1,13 +1,10 @@
 package effects;
 
 import entities.GameObject;
-import java.awt.Color;
 import java.awt.Point;
 import java.util.concurrent.Semaphore;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.BorderFactory;
-import javax.swing.JComponent;
 
 /**
  * Classe para movimentacao de qualquer JComponent (JPanel, JLabel, etc.) de uma
@@ -80,6 +77,7 @@ public class Translation extends Thread {
         object.setLocation(x, y);
         sleep(100 / 6);
       }//fim for
+      
 
       //Vai aumentando a distancia e descobrindo seus pontos x e y.
 //            for (int variableHypotenuse = 0; variableHypotenuse < hypotenuse; variableHypotenuse += speed) {

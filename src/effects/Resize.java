@@ -115,4 +115,5 @@ public class Resize extends Thread {
     animacao.start();
   }//fim moveObject
 
+
 }//fim class

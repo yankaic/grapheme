@@ -28,13 +28,10 @@ public class ReziseTest extends javax.swing.JFrame {
   private void initComponents() {
 
     whilePanel1 = new test.WhilePanel();
-    jLabel1 = new Label_Iago();
 
     setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
     whilePanel1.setLayout(new java.awt.BorderLayout());
-
-    jLabel1.setText("jLabel1");
 
     javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
     getContentPane().setLayout(layout);
@@ -44,19 +41,13 @@ public class ReziseTest extends javax.swing.JFrame {
         .addGap(62, 62, 62)
         .addComponent(whilePanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
         .addContainerGap(202, Short.MAX_VALUE))
-      .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        .addComponent(jLabel1)
-        .addGap(100, 100, 100))
     );
     layout.setVerticalGroup(
       layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
       .addGroup(layout.createSequentialGroup()
         .addGap(52, 52, 52)
         .addComponent(whilePanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
-        .addGap(49, 49, 49)
-        .addComponent(jLabel1)
-        .addContainerGap(107, Short.MAX_VALUE))
+        .addContainerGap(170, Short.MAX_VALUE))
     );
 
     pack();
@@ -102,7 +93,6 @@ public class ReziseTest extends javax.swing.JFrame {
   }
 
   // Variables declaration - do not modify//GEN-BEGIN:variables
-  private javax.swing.JLabel jLabel1;
   private test.WhilePanel whilePanel1;
   // End of variables declaration//GEN-END:variables
 }

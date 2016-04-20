@@ -42,6 +42,7 @@ public class SwipeView extends javax.swing.JFrame {
     getContentPane().setLayout(new javax.swing.OverlayLayout(getContentPane()));
 
     jPanel2.setBackground(new java.awt.Color(0, 0, 0));
+    jPanel2.setOpaque(false);
 
     javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
     jPanel2.setLayout(jPanel2Layout);
