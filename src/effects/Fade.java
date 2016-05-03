@@ -9,6 +9,7 @@ import java.util.concurrent.Semaphore;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JComponent;
+import javax.swing.JLabel;
 
 /**
  *
@@ -38,12 +39,7 @@ public class Fade extends Thread {
     public Fade(GameObject object, long time, byte fade) {
         this.object = object;
         this.fade = fade;
-        
-        if(this.fade==FADE_IN){
-            distance=255-this.object.getColorBackgroud().getAlpha();
-        }else{
-            distance=this.object.getColorBackgroud().getAlpha();
-        }
+        distance = 255;
         this.speed = (this.distance * 100) / (time * 6);
     }//fim construtor
 
@@ -58,21 +54,18 @@ public class Fade extends Thread {
                 self = true;
             }//fim if
             mutex.release();
-            
-         
-            object.getComponent().setOpaque(true);
-            for (double variable = 0; variable < distance; variable+=speed) {
-                double alpha = fade*speed + this.object.getAlpha();
-              // object.setAlpha(alpha);
-                //System.out.println("alpha"+alpha + " -- "+ fade*speed  + " )) " + variable + " " + distance);
-                Color c = new Color( 0, 0,0,3);  
-                //object.setBackground(c);
-                object.getComponent().setBackground(c);
-                object.getComponent().repaint();
-                //System.out.println("******* "+ object.getComponent().getBackground().getAlpha());
-                sleep(200);
+            JComponent component = object.getComponent();
+
+            component.setOpaque(true);
+            Color transparent = new Color(0, 0, 0, 0);
+            Graphics graphics = component.getGraphics();
+            for (double variable = 255; variable >= 0; variable -= speed) {
+                transparent = new Color(0, 0, 0, (int)variable);
+                graphics.setColor(transparent);
+                graphics.fillRect(0, 0, component.getWidth(), component.getHeight());
+                sleep(1000);
             }//fim for
-          //  this.object.setAlpha(0.0);
+            //  this.object.setAlpha(0.0);
             if (self) {
                 aniMutex.release();
                 anitag = false;
