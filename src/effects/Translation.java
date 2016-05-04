@@ -5,6 +5,7 @@ import java.awt.Point;
 import java.util.concurrent.Semaphore;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JComponent;
 
 /**
  * Classe para movimentacao de qualquer JComponent (JPanel, JLabel, etc.) de uma
@@ -36,12 +37,12 @@ public class Translation extends Thread {
    * Este construtor apenas configura como a animacao sera realizada. Para que a
    * animacao comece, basta utilizar a funcao start() de Thread.
    *
-   * @param object objeto a ser movimentado
+   * @param obj objeto a ser movimentado
    * @param endPoint ponto que o objeto vai ficar quando a animacao terminar.
    * @param time long: tempo da animação em millisegundos
    */
-  public Translation(GameObject object, Point endPoint, long time) {
-    this.object = object;
+  public Translation(JComponent obj, Point endPoint, long time) {
+    this.object = new GameObject(obj);
     startPoint = object.getLocation();
 
     distance = new Point();
@@ -113,7 +114,7 @@ public class Translation extends Thread {
    * @param destino ponto que deseja que o objeto fique depois da animacao.
    * @param time long : tempo da animação em milissegundos
    */
-  public static void moveObject(GameObject objeto, Point destino, long time) {
+  public static void moveObject(JComponent objeto, Point destino, long time) {
     Translation animacao = new Translation(objeto, destino, time);
     animacao.start();
   }//fim moveObject

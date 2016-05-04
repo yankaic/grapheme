@@ -22,7 +22,7 @@ public class TranslationTest extends javax.swing.JFrame {
      */
     public TranslationTest() {
         initComponents();
-        Translation.moveObject(new GameObject(panel), new Point(getWidth()/2-200, getHeight()/2-230),500);
+        Translation.moveObject(panel, new Point(getWidth()/2-200, getHeight()/2-230),500);
         Resize.resizeObject(panel, new Dimension(400, 400), 500);
     }
 

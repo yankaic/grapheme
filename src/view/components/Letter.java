@@ -20,6 +20,7 @@ import javax.swing.JLabel;
 public class Letter extends JLabel {
 
   private Point oldLocation;
+  
 
   public Letter() {
     this("A");
