@@ -1,13 +1,17 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package view;
 
 import effects.Translation;
 import entities.GameObject;
+import java.awt.MouseInfo;
 import java.awt.Point;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionAdapter;
+import java.awt.event.MouseMotionListener;
+import javax.swing.Timer;
 import view.components.Letter;
 
 /**
@@ -24,13 +28,58 @@ public class SwipeView extends javax.swing.JFrame {
     setLocationRelativeTo(null);
     init();
   }
-  
-  private void init(){
-      Letter letter = new Letter();
-      letter.setLocation(900, 10);
-      letterPanel.add(letter);
-      Translation t = new Translation(new GameObject(letter), new Point(450, 10), 1400);
-      t.start();
+
+  private void init() {
+    Letter letter = new Letter();
+    letter.setLocation(900, 10);
+    letterPanel.add(letter);
+    Translation t = new Translation(new GameObject(letter), new Point(450, 10), 1400);
+    t.start();
+
+    letterEvents(letter);
+  }
+
+  private void letterEvents(Letter letter) {
+    letter.addMouseListener(new MouseAdapter() {
+      private Timer chronometer;
+      @Override
+      public void mousePressed(MouseEvent me) {
+        Point location = letterPanel.getLocation();
+        location.x += letter.getX();
+        location.y += letter.getY();
+        letter.setLocation(location);
+        letter.setOldLocation(location);
+        letterPanel.remove(letter);
+        topPanel.add(letter);
+        topPanel.repaint();
+      }
+
+      @Override
+      public void mouseReleased(MouseEvent mr) {
+        final int delayTime = 500;
+        Translation animation = new Translation(new GameObject(letter), letter.getOldLocation(), delayTime);
+        animation.start();
+        chronometer = new Timer(delayTime+100, ActionEvent -> {
+          Point location = letter.getLocation();
+          location.x -= letterPanel.getX();
+          location.y -= letterPanel.getY();
+          letter.setLocation(location);
+          
+          topPanel.remove(letter);
+          letterPanel.add(letter);
+          letterPanel.repaint();
+          chronometer.stop();          
+        });
+        chronometer.start();
+      }
+    });
+
+    letter.addMouseMotionListener(new MouseMotionAdapter() {
+      @Override
+      public void mouseDragged(MouseEvent me) {
+
+      }
+    });
   }
 
   /**
@@ -42,18 +91,34 @@ public class SwipeView extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        topPanel = new javax.swing.JPanel();
         workPanel = new javax.swing.JPanel();
         tvLabel = new javax.swing.JLabel();
         letterPanel = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
-        jPanel2 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
+        backPanel = new javax.swing.JPanel();
+        backLabel = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMaximumSize(new java.awt.Dimension(900, 600));
         setMinimumSize(new java.awt.Dimension(900, 600));
         setResizable(false);
         getContentPane().setLayout(new javax.swing.OverlayLayout(getContentPane()));
+
+        topPanel.setOpaque(false);
+
+        javax.swing.GroupLayout topPanelLayout = new javax.swing.GroupLayout(topPanel);
+        topPanel.setLayout(topPanelLayout);
+        topPanelLayout.setHorizontalGroup(
+            topPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 900, Short.MAX_VALUE)
+        );
+        topPanelLayout.setVerticalGroup(
+            topPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 600, Short.MAX_VALUE)
+        );
+
+        getContentPane().add(topPanel);
 
         workPanel.setBorder(javax.swing.BorderFactory.createEmptyBorder(25, 20, 25, 0));
         workPanel.setOpaque(false);
@@ -85,14 +150,14 @@ public class SwipeView extends javax.swing.JFrame {
 
         getContentPane().add(workPanel);
 
-        jPanel2.setBackground(new java.awt.Color(0, 0, 0));
-        jPanel2.setOpaque(false);
-        jPanel2.setLayout(new java.awt.BorderLayout());
+        backPanel.setBackground(new java.awt.Color(0, 0, 0));
+        backPanel.setOpaque(false);
+        backPanel.setLayout(new java.awt.BorderLayout());
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/background.png"))); // NOI18N
-        jPanel2.add(jLabel1, java.awt.BorderLayout.CENTER);
+        backLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/background.png"))); // NOI18N
+        backPanel.add(backLabel, java.awt.BorderLayout.CENTER);
 
-        getContentPane().add(jPanel2);
+        getContentPane().add(backPanel);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -137,10 +202,11 @@ public class SwipeView extends javax.swing.JFrame {
   }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel backLabel;
+    private javax.swing.JPanel backPanel;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel letterPanel;
+    private javax.swing.JPanel topPanel;
     private javax.swing.JLabel tvLabel;
     private javax.swing.JPanel workPanel;
     // End of variables declaration//GEN-END:variables

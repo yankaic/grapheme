@@ -5,6 +5,11 @@
  */
 package view.components;
 
+import java.awt.MouseInfo;
+import java.awt.Point;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionAdapter;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
@@ -13,22 +18,48 @@ import javax.swing.JLabel;
  * @author Yan Kaic
  */
 public class Letter extends JLabel {
-    
-    public Letter(){
-        this("A");
-    }
-    public Letter(String name){
-        super();
-        setName(name);
-        init();
-    }
 
-    private void init() {
-        String letter = getName().toLowerCase();
-        ImageIcon icon = new ImageIcon(getClass().getResource("/letters/"+letter+"/uppercase/letter.png"));
-        setIcon(icon);
-        setSize(icon.getIconWidth(),icon.getIconHeight());
-    }
-    
-    
+  private Point oldLocation;
+
+  public Letter() {
+    this("A");
+  }
+
+  public Letter(String name) {
+    super();
+    setName(name);
+    init();
+  }
+
+  private void init() {
+    String letter = getName().toLowerCase();
+    ImageIcon icon = new ImageIcon(getClass().getResource("/letters/" + letter + "/uppercase/letter.png"));
+    setIcon(icon);
+    setSize(icon.getIconWidth(), icon.getIconHeight());
+    addMouseMotionListener(new MouseMotionAdapter() {
+      @Override
+      public void mouseDragged(MouseEvent e) {
+        Point mouse = MouseInfo.getPointerInfo().getLocation();
+        Point tela = getLocationOnScreen();
+
+        tela.x -= getLocation().x;
+        tela.y -= getLocation().y;
+
+        mouse.x -= tela.x + getWidth() / 2;
+        mouse.y -= tela.y + getHeight() / 2;
+        setLocation(mouse);
+      }
+    });
+  }
+
+  public void setOldLocation(Point location) {
+    this.oldLocation = location;
+  }
+
+  public Point getOldLocation() {
+    return oldLocation;
+  }
+  
+  
+
 }
