@@ -42,6 +42,7 @@ public class SwipeView extends javax.swing.JFrame {
     t.start();
 
     letterEvents(letter);
+    repaint();
   }
 
   private void letterEvents(Letter letter) {
@@ -66,11 +67,11 @@ public class SwipeView extends javax.swing.JFrame {
           letter.setOldLocation(letter.getLocation());
         }
         catch (IllegalArgumentException uae) {
-          final int delayTime = 500;
+          final int delayTime = 300;
           Translation animation = new Translation(letter, letter.getOldLocation(), delayTime);
           animation.start();
 
-          Timer chronometer = new Timer(delayTime + 100, ActionEvent -> {
+          Timer timer = new Timer(delayTime + 100, ActionEvent -> {
             Point location = letter.getLocation();
             location.x -= letterPanel.getX();
             location.y -= letterPanel.getY();
@@ -78,10 +79,10 @@ public class SwipeView extends javax.swing.JFrame {
 
             topPanel.remove(letter);
             letterPanel.add(letter);
-            checkForms(letter);
+            checkAll(letter);
           });
-          chronometer.setRepeats(false);
-          chronometer.start();
+          timer.setRepeats(false);
+          timer.start();
         }
       }
     });
@@ -95,7 +96,7 @@ public class SwipeView extends javax.swing.JFrame {
     });
   }
 
-  public void checkForms(Letter letter) {
+  public void checkAll(Letter letter) {
     for (Component c : itensTable.getComponents()) {
       Form form = (Form) c;
       form.check(letter);
@@ -125,12 +126,12 @@ public class SwipeView extends javax.swing.JFrame {
   @SuppressWarnings("unchecked")
   // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
   private void initComponents() {
-    java.awt.GridBagConstraints gridBagConstraints;
 
     topPanel = new javax.swing.JPanel();
     workPanel = new javax.swing.JPanel();
     letterPanel = new javax.swing.JPanel();
-    jLabel2 = new javax.swing.JLabel();
+    jPanel2 = new javax.swing.JPanel();
+    tV1 = new view.components.TV();
     tablePanel = new javax.swing.JPanel();
     itensTable = new javax.swing.JPanel();
     form1 = new view.components.Form();
@@ -145,7 +146,6 @@ public class SwipeView extends javax.swing.JFrame {
 
     setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
     setTitle("Grafemas");
-    setMaximumSize(new java.awt.Dimension(900, 600));
     setMinimumSize(new java.awt.Dimension(900, 600));
     setResizable(false);
     getContentPane().setLayout(new javax.swing.OverlayLayout(getContentPane()));
@@ -177,7 +177,7 @@ public class SwipeView extends javax.swing.JFrame {
     letterPanel.setLayout(letterPanelLayout);
     letterPanelLayout.setHorizontalGroup(
       letterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addGap(0, 880, Short.MAX_VALUE)
+      .addGap(0, 868, Short.MAX_VALUE)
     );
     letterPanelLayout.setVerticalGroup(
       letterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -186,9 +186,26 @@ public class SwipeView extends javax.swing.JFrame {
 
     workPanel.add(letterPanel, java.awt.BorderLayout.PAGE_END);
 
-    jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/tv.png"))); // NOI18N
-    jLabel2.setVerticalAlignment(javax.swing.SwingConstants.TOP);
-    workPanel.add(jLabel2, java.awt.BorderLayout.LINE_END);
+    jPanel2.setOpaque(false);
+
+    javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+    jPanel2.setLayout(jPanel2Layout);
+    jPanel2Layout.setHorizontalGroup(
+      jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+      .addGroup(jPanel2Layout.createSequentialGroup()
+        .addContainerGap()
+        .addComponent(tV1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+    );
+    jPanel2Layout.setVerticalGroup(
+      jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+      .addGroup(jPanel2Layout.createSequentialGroup()
+        .addContainerGap()
+        .addComponent(tV1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+        .addContainerGap(144, Short.MAX_VALUE))
+    );
+
+    workPanel.add(jPanel2, java.awt.BorderLayout.LINE_END);
 
     tablePanel.setMaximumSize(new java.awt.Dimension(608, 395));
     tablePanel.setMinimumSize(new java.awt.Dimension(608, 395));
@@ -294,8 +311,9 @@ public class SwipeView extends javax.swing.JFrame {
   private view.components.Form form5;
   private javax.swing.JPanel itensTable;
   private javax.swing.JLabel jLabel1;
-  private javax.swing.JLabel jLabel2;
+  private javax.swing.JPanel jPanel2;
   private javax.swing.JPanel letterPanel;
+  private view.components.TV tV1;
   private javax.swing.JPanel tablePanel;
   private javax.swing.JPanel topPanel;
   private javax.swing.JPanel workPanel;
