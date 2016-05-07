@@ -5,8 +5,6 @@
  */
 package graphemes;
 
-import entities.Controller;
-import test.FadeTest;
 import view.SwipeView;
 
 /**

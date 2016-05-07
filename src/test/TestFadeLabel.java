@@ -6,7 +6,6 @@
 package test;
 
 import effects.Fade;
-import entities.FadeLabel;
 import entities.GameLabel;
 import java.awt.AlphaComposite;
 import java.awt.BorderLayout;

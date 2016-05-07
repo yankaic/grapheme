@@ -1,17 +1,9 @@
 package effects;
 
-import entities.FadeLabel;
 import entities.GameLabel;
-import java.awt.AlphaComposite;
-import java.awt.Color;
-import java.awt.color.ColorSpace;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.concurrent.Semaphore;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JLabel;
-import javax.swing.Timer;
 
 /**
  *
