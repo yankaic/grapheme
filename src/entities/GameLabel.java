@@ -1,16 +1,19 @@
 package entities;
 
+import java.awt.AlphaComposite;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Image;
-import java.awt.Rectangle;
 import java.awt.RenderingHints;
-import java.util.Observer;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+import static javax.swing.SwingConstants.CENTER;
 
 /**
  *
@@ -19,24 +22,21 @@ import javax.swing.JLabel;
 public class GameLabel extends JLabel {
 
     private boolean fadein;
+    private float alpha;
 
     public GameLabel() {
-
     }//fim construtor
 
     @Override
     public void paintComponent(Graphics gph) {
-        //super.paintComponent(gph);
+        super.paintComponent(gph);
 
         Graphics2D graphics = (Graphics2D) gph.create();
         graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
         if (getIcon() != null) {
             resizeIcon(graphics);
-        }
-        if (fadein) {
-            fadein(graphics);
-        }
+        }//fim if
     }
 
     private void resizeIcon(Graphics2D graphics) {
@@ -60,25 +60,34 @@ public class GameLabel extends JLabel {
         }//fim if-else
 
         graphics.drawImage(icon.getImage(), 0, 0, (int) w, (int) h, this);
+    }   
+    
+    
+    public void setAlpha(float value) {
+        if (alpha != value) {
+            float old = alpha;
+            alpha = value;
+            firePropertyChange("alpha", old, alpha);
+            repaint();
+        }
     }
 
-    private void fadein(Graphics2D graphics) {
-        new Thread() {
-            @Override
-            public void run() {
-                Color color;
-                for (int i = 0; i < 255; i++) {
-                    try {
-                        color = new Color(0, 0, 0, i);
-                        graphics.setPaint(color);
-                        graphics.fillRect(0, 0, getWidth(), getHeight());
-                        sleep(1000);
-                    } catch (InterruptedException ex) {
-                        Logger.getLogger(GameLabel.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                }
-            }
-        };
+    public float getAlpha() {
+        return alpha;
     }
+    
+    @Override
+    public Dimension getPreferredSize() {
+        return getIcon() == null ? new Dimension(300,300) : new Dimension(getIcon().getIconWidth(), getIcon().getIconHeight());
+    }
+
+    @Override
+    public void paint(Graphics g) {
+        Graphics2D g2d = (Graphics2D) g.create();
+        g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, getAlpha()));
+        super.paint(g2d);
+        g2d.dispose();
+    }
+
 
 }//fim class
