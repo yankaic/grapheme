@@ -10,6 +10,11 @@ import java.awt.Point;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
+import java.io.File;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
@@ -21,7 +26,6 @@ public class Letter extends JLabel {
 
   private Point oldLocation;
   
-
   public Letter() {
     this("A");
   }
@@ -33,24 +37,28 @@ public class Letter extends JLabel {
   }
 
   private void init() {
-    String letter = getName().toLowerCase();
-    ImageIcon icon = new ImageIcon(getClass().getResource("/letters/" + letter + "/uppercase/letter.png"));
-    setIcon(icon);
-    setSize(icon.getIconWidth(), icon.getIconHeight());
-    addMouseMotionListener(new MouseMotionAdapter() {
-      @Override
-      public void mouseDragged(MouseEvent e) {
-        Point mouse = MouseInfo.getPointerInfo().getLocation();
-        Point tela = getLocationOnScreen();
-
-        tela.x -= getLocation().x;
-        tela.y -= getLocation().y;
-
-        mouse.x -= tela.x + getWidth() / 2;
-        mouse.y -= tela.y + getHeight() / 2;
-        setLocation(mouse);
+      try {
+          String letter = getName().toLowerCase();
+          ImageIcon icon = new ImageIcon(new URL(getUpperCasePath()+"letter.png"));
+          setIcon(icon);
+          setSize(icon.getIconWidth(), icon.getIconHeight());
+          addMouseMotionListener(new MouseMotionAdapter() {
+              @Override
+              public void mouseDragged(MouseEvent e) {
+                  Point mouse = MouseInfo.getPointerInfo().getLocation();
+                  Point tela = getLocationOnScreen();
+                  
+                  tela.x -= getLocation().x;
+                  tela.y -= getLocation().y;
+                  
+                  mouse.x -= tela.x + getWidth() / 2;
+                  mouse.y -= tela.y + getHeight() / 2;
+                  setLocation(mouse);
+              }
+          });
+      } catch (MalformedURLException ex) {
+          Logger.getLogger(Letter.class.getName()).log(Level.SEVERE, null, ex);
       }
-    });
   }
 
   public void setOldLocation(Point location) {
@@ -61,6 +69,16 @@ public class Letter extends JLabel {
     return oldLocation;
   }
   
+  public String getLowerCasePath(){
+      return getClass().getResource(File.separator+"letters"+File.separator +
+                                        getName().trim().toLowerCase() + File.separator +
+                                        "lowercase" + File.separator).toString();
+  }
   
+  public String getUpperCasePath(){
+      return getClass().getResource(File.separator+"letters"+File.separator +
+                                        getName().trim().toLowerCase() + File.separator +
+                                        "uppercase" + File.separator).toString();
+  }
 
 }

@@ -5,7 +5,6 @@
  */
 package test;
 
-import view.components.Letter;
 
 /**
  *

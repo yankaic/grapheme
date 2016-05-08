@@ -25,24 +25,24 @@ public class TV extends javax.swing.JPanel {
   public TV() {
 
     initComponents();
-    VideoPlayer video = new VideoPlayer();
-    video.init();
+   // VideoPlayer video = new VideoPlayer();
+   // video.init();
 //    workPanel.removeAll();
-    videoPanel.add(video.getPanel());
-    video.setSize(240, 180);
-    video.setPreferredSize(video.getSize());
+   // videoPanel.add(video.getPanel());
+    //video.setSize(240, 180);
+    //video.setPreferredSize(video.getSize());
     
-    Timer timer = new Timer(500, ActionEvent -> {
-      video.getPlayer().play();
-    });
-    timer.setRepeats(false);
-//    timer.start();
+//    Timer timer = new Timer(500, ActionEvent -> {
+//      video.getPlayer().play();
+//    });
+//    timer.setRepeats(false);
+////    timer.start();
 
-    timer = new Timer(1, ActionEvent -> {
-      imagePanel.repaint();
-    });
-    timer.setRepeats(false);
-    timer.start();
+//    timer = new Timer(1, ActionEvent -> {
+//      imagePanel.repaint();
+//    });
+//    timer.setRepeats(false);
+//    timer.start();
 
   }
 

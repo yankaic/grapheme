@@ -7,26 +7,15 @@ package test;
 
 import effects.Fade;
 import entities.GameLabel;
-import java.awt.AlphaComposite;
 import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.EventQueue;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.GridBagLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
 import java.io.File;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.Timer;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
@@ -80,7 +69,7 @@ public class TestFadeLabel {
             label.setBounds(200, 200, 200, 200);
             background.add(label);
             label.setAlpha(0f);
-            Fade.fadeIn(label, 5000);
+            Fade.fadeIn(label, 5000, 1f);
         }
     }
 

@@ -22,26 +22,35 @@ import java.util.logging.Logger;
  */
 public class Controller {
 
+    //lista com o caminho das letras
     public static ArrayList<File> pathLetters;
+    
+    //objeto para leitura de arquivo de texto
     private ObjectInputStream input;
-    private ObjectOutputStream output;
     private FileInputStream inputStream;
+    
+    //objeto para escrita em arquivo de texto
+    private ObjectOutputStream output;
     private FileOutputStream outputStream;
-
+      
+    
+    /**
+     * Construtor da classe
+     * Inicializa as variáveis e recupera o estado do jogo
+     */
     public Controller() {
         pathLetters = new ArrayList<>();
-        //restartListOfFiles();
+        
+        //recuperando do arquivo os caminhos das letras
         reloadFiles();
-        Collections.shuffle(pathLetters);
+        Collections.shuffle(pathLetters);//embaralhando o array 
     }//fim construtor
 
-    private void initView() {
-
-    }//fim initView
 
     /**
      * Método que reinicializa a lista de arquivos (letras do jogo) para a lista
      * Esse método recria a lista com todos os grafemas encontrados na pasta letters
+     * 
      */
     public void restartListOfFiles() {
         try {
