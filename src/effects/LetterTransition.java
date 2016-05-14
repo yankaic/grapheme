@@ -5,7 +5,9 @@
  */
 package effects;
 
+import entities.FadeComponent;
 import entities.GameLabel;
+import entities.GameObject;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Point;
@@ -14,6 +16,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.scene.media.AudioClip;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import view.SwipeView;
@@ -26,27 +29,39 @@ import view.components.Letter;
 public class LetterTransition extends Thread {
 
     //letra cuja transição será animada
-    private final Letter letter;
+    private Letter letter;
 
     //typo da transição
-    private final boolean type;
+    private boolean type;
     public static boolean UPPER_CASE = true;
     public static boolean LOWER_CASE = false;
-    
+
     //tamanho da tela
     private Dimension viewDimension;
-    
+
     //posição do centro da tela
     private Point finalPosition;
 
     //posição inicial da label sendo animada
     private Point initialPosition;
-    
+
     //tamanho inicial da label sendo animada
     private Dimension initialDimension;
-    
+
     //tamanho final da label sendo animada
     private Dimension finalDimension;
+
+    private AudioClip audioClip;
+
+    private String audioSource;
+
+    private static Translation tranlation;
+
+    private static Resize resize;
+
+    private GameLabel image;
+
+    private static Fade fade;
 
     /**
      * Método construtor da classe de animação da transição de uma letra
@@ -59,71 +74,72 @@ public class LetterTransition extends Thread {
     public LetterTransition(Letter letter, Dimension viewDimension, boolean type) {
         this.letter = letter;//letra sendo animada
         this.type = type;//tipo da animação
-        
+
         //configurações default
         initialPosition = new Point(770, 150); //posição inicial das labels sendo animadas
         initialDimension = new Dimension(0, 0); //dimensão inicial da label
-        finalDimension = new Dimension(255,369);//dimensão final da label
+        finalDimension = new Dimension(255, 369);//dimensão final da label
         this.viewDimension = viewDimension;
+
     }//fim construtor
+
+    public LetterTransition() {
+
+    }
 
     /**
      * Método que faz a animação
      */
     @Override
+    @SuppressWarnings("empty-statement")
     public void run() {
         try {
-            
-            //SwipeView.getFadeBackgroud().setSize(viewDimension);
-            //backgroud.setOpaque(true);
-            //backgroud.setBackground(Color.red);
-            SwipeView.getFadeBackgroud().setAlpha(0f);
-            //SwipeView.addTransitionLabels(backgroud);
-            Fade.fadeIn(SwipeView.getFadeBackgroud(), 2000, 0.5f);
-            sleep(3000);
-                    
-            //animação das letras maiúsculas
+
             if (type) {
 
             } //animação das letras minúsculas
             else {
                 for (int countImages = 1; countImages <= 3; countImages++) {
                     //icone do examplo
-                    ImageIcon icon = new ImageIcon(new URL(letter.getLowerCasePath()+"examples"+
-                                          File.separator+countImages+File.separator+"image.png"));
-                    GameLabel image = new GameLabel();   
+                    String path = letter.getLowerCasePath() + "examples"
+                            + File.separator + countImages + File.separator;
+                    ImageIcon icon = new ImageIcon(new URL(path + "image.png"));
+                    image = new GameLabel();
                     image.setIcon(icon);
-                    
+
                     //posição e dimensão iniciais da label
                     image.setLocation(initialPosition);
                     image.setSize(initialDimension);
-                    
+
                     //calculando a posição final e a dimensão final
                     finalDimension = new Dimension(icon.getIconWidth(), icon.getIconHeight());
-                    finalPosition = new Point((int) (viewDimension.width/2) - (finalDimension.width/2),
-                                              (int) (viewDimension.height/2) - (finalDimension.height/2)  );
-                            
+                    finalPosition = new Point((int) (viewDimension.width / 2) - (finalDimension.width / 2),
+                            (int) (viewDimension.height / 2) - (finalDimension.height / 2));
+
                     //adicionando o exemplo na janela
                     SwipeView.addTransitionLabels(image);
-                    
+
                     //animando a translação e redimensionamento da label
-                    Translation.moveObject(image, finalPosition, 2000);
-                    Resize.resizeObject(image, finalDimension, 2000); 
-                    
-                    Thread.sleep(5000);
-                    
+                    tranlation = Translation.move(image, finalPosition, 2000);
+                    resize = Resize.resize(image, finalDimension, 2000);
+
+                    // audioSource = path + "audio.aiff";
+                    //audioClip = new AudioClip(audioSource);
+                    //              audioClip.play();
+                    sleep(6000);
+
                     //animando o retorno da label para sua posição inicial
-                    Translation.moveObject(image, initialPosition, 2000);
-                    Resize.resizeObject(image, initialDimension, 2000); 
-                    
-                    Thread.sleep(5000);
+                    tranlation = Translation.move(image, initialPosition, 2000);
+                    resize = Resize.resize(image, initialDimension, 2000);
+
+                    Thread.sleep(4000);
                 }//fim for
             } //fim if-else
-        } catch (InterruptedException ex) {
+        } catch (InterruptedException | MalformedURLException ex) {
             Logger.getLogger(LetterTransition.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (MalformedURLException ex) {
-            Logger.getLogger(LetterTransition.class.getName()).log(Level.SEVERE, null, ex);
-        }//fim try-catch
+        }
+        //fim try-catch
+        //fim try-catch
     }//fim run
 
     /**
@@ -148,4 +164,78 @@ public class LetterTransition extends Thread {
     public static void upperCaseLetter(Letter letter, Dimension viewDimension) {
         new LetterTransition(letter, viewDimension, UPPER_CASE).start();
     }//fim upperCaseLetter
+
+    /**
+     * Método que pausa a animação 
+     */
+    public void pause() {
+        tranlation.suspend();
+        resize.suspend();
+        this.suspend();
+    }//fim pause
+
+    /**
+     * Método que inicia ou retoma a animação
+     */
+    public void play() {
+        this.resume();
+        resize.resume();
+        tranlation.resume();
+    }//fim play
+
+    /**
+     * Método que reinicia a animação
+     * @return LetterTransition
+     */
+    public LetterTransition replay() {
+        LetterTransition letterTransition = new LetterTransition(letter, viewDimension, type);
+        letterTransition.start();
+        image.setVisible(false);
+        this.stop();
+        return letterTransition;
+    }//fim replay
+
+    /**
+     * Método que habilita o audio da animação
+     */
+    public void enableAudio() {
+
+    }//fim enableAudio
+
+    /**
+     * Método que desabilita o audio da animação
+     */
+    public void disableAudio() {
+
+    }//fim disableAudio
+
+    /**
+     * Método que encerra a animação
+     */
+    public void close() {
+        if (tranlation != null) {
+            tranlation.stop();
+        }//fim if
+        if (resize != null) {
+            resize.stop();
+        }//fim if
+        if (image != null) {
+            image.setVisible(false);
+        }//fim if
+        this.stop();
+    }//fim close
+
+    /**
+     * Método que inicia uma animação dependendo da visibilidade do painel lowerCaseLetterAnimation
+     * @param fadeComponent FadeComponent
+     * @param fadeScale float 
+     * @param visibility boolean 
+     */
+    public static void fade(FadeComponent fadeComponent, float fadeScale, boolean visibility) {
+        if(visibility){//fade in
+            fade = Fade.fadeIn(fadeComponent, 3000, fadeScale);
+        }else{//fade out
+            fade  = Fade.fadeOut(fadeComponent, 1000, 0f);  
+        }//fim if-else
+    }//fim fade
 }//fim class

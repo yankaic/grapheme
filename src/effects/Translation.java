@@ -1,5 +1,6 @@
 package effects;
 
+import entities.GameLabel;
 import entities.GameObject;
 import java.awt.Point;
 import java.util.concurrent.Semaphore;
@@ -16,6 +17,8 @@ import javax.swing.JComponent;
  * @since 2015
  */
 public class Translation extends Thread {
+
+   
 
   private final GameObject object;
   private final Point startPoint;
@@ -72,6 +75,7 @@ public class Translation extends Thread {
       double adjacentCateto = (cosine * speed);
       double oppositiveCateto = (sine * speed);
 
+      //Vai aumentando a distancia e descobrindo seus pontos x e y.
       for (double hoop = 0; hoop < hypotenuse; hoop += speed) {
         double x = adjacentCateto + object.getXF();
         double y = oppositiveCateto + object.getYF();
@@ -80,15 +84,7 @@ public class Translation extends Thread {
       }//fim for
       
 
-      //Vai aumentando a distancia e descobrindo seus pontos x e y.
-//            for (int variableHypotenuse = 0; variableHypotenuse < hypotenuse; variableHypotenuse += speed) {
-//
-//                adjacentCateto = (int) (cosine * variableHypotenuse) + startPoint.x;
-//                oppositiveCateto = (int) (sine * variableHypotenuse) + startPoint.y;
-//                object.setLocation((int)adjacentCateto, (int)oppositiveCateto);
-//                sleep(100/6);
-//
-//            }
+
       //coloca o objeto no ponto final que foi pedido.
       adjacentCateto = (cosine * hypotenuse) + startPoint.x;
       oppositiveCateto = (sine * hypotenuse) + startPoint.y;
@@ -119,4 +115,9 @@ public class Translation extends Thread {
     animacao.start();
   }//fim moveObject
 
+  public static Translation move(JComponent objeto, Point destino, long time) {
+    Translation animacao = new Translation(objeto, destino, time);
+    animacao.start();
+    return animacao;
+  }//fim moveObject
 }//fim class

@@ -18,12 +18,7 @@ public class TransitionTest {
     public static void main(String args[]) {
         
      final  SwipeView view = new SwipeView();
-    /* Set the Nimbus look and feel */
-    //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-    /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-     */
-    try {
+     try {
       for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
         if ("Nimbus".equals(info.getName())) {
           javax.swing.UIManager.setLookAndFeel(info.getClassName());
@@ -48,11 +43,11 @@ public class TransitionTest {
     /* Create and display the form */
     java.awt.EventQueue.invokeLater(new Runnable() {
       public void run() {
-          view.setVisible(true);
+         view.setVisible(true);
       }
     });
-    Letter letter = new Letter("A");
-    LetterTransition.lowerCaseLetter(letter, view.getSize());
+   
+    
     //SwipeView.addLabels(letter);
   }
 }

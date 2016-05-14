@@ -6,11 +6,24 @@
 package test;
 
 import effects.Fade;
+import entities.FadeComponent;
 import entities.GameLabel;
 import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.GridBagLayout;
 import java.io.File;
+import javafx.animation.FadeTransition;
+import javafx.application.Platform;
+import javafx.embed.swing.JFXPanel;
+import javafx.scene.Group;
+import javafx.scene.Node;
+import javafx.scene.Scene;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
+import javafx.util.Duration;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -20,6 +33,8 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
 public class TestFadeLabel {
+
+    FadeTransition fade;
 
     public static void main(String[] args) {
         new TestFadeLabel();
@@ -40,38 +55,35 @@ public class TestFadeLabel {
                 JFrame frame = new JFrame("Testing");
                 frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                 frame.setLayout(new BorderLayout());
-                frame.add(new MainPane());
+                FadeComponent pane = new FadeComponent(new Dimension(400,400));
+                JPanel panel = new JPanel();
+                panel.setSize(new Dimension(400,400));
+                panel.add(pane);
+                frame.add(panel);
                 frame.pack();
                 frame.setLocationRelativeTo(null);
                 frame.setVisible(true);
+                frame.setSize(400, 400);
+               
+               // Fade.fadeOut(pane, 3000, 0.5f);
             }
         });
+        
+        
+    
+        
     }
+   
+        
 
-    public class MainPane extends JPanel {
+    public class MainPane extends JFXPanel {
 
         private float direction = 0.05f;
         private GameLabel label = new GameLabel();
 
         public MainPane() {
-            setLayout(new BorderLayout());
-            JLabel background = new JLabel();
-            background.setLayout(new GridBagLayout());
-            try {
-                System.out.println(getClass().getResource("/"));
-                background.setIcon(new ImageIcon(ImageIO.read(getClass().getResource(File.separator+"images"+File.separator+"background.png"))));
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            add(background);
-
-            label = new GameLabel();
-            label.setBounds(200, 200, 200, 200);
-            background.add(label);
-            label.setAlpha(0f);
-            Fade.fadeIn(label, 5000, 1f);
+            super();
         }
     }
 
-  
 }

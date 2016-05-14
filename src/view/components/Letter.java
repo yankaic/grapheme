@@ -81,4 +81,8 @@ public class Letter extends JLabel {
                                         "uppercase" + File.separator).toString();
   }
 
+    public boolean isLowerCaseLetter() {
+        return true;
+    }
+
 }

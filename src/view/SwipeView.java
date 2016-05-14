@@ -17,6 +17,8 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionAdapter;
 import java.awt.event.MouseMotionListener;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
@@ -38,7 +40,6 @@ public class SwipeView extends javax.swing.JFrame {
     setLocationRelativeTo(null);
     setIconImage(new ImageIcon(getClass().getResource("/icons/fab.png")).getImage());
     init();
-    
   }
 
   private void init() {
@@ -72,6 +73,17 @@ public class SwipeView extends javax.swing.JFrame {
           Form selectedForm = greaterIntersection(letter);
           selectedForm.fit(letter);
           letter.setOldLocation(letter.getLocation());
+          Timer animation  = new Timer(500, (ActionEvent e) -> {
+              if(letter.isLowerCaseLetter()){//animação de letra minúscula
+                  lowerCaseAnimation.setLetter(letter);
+                  transitionTopPanel.setVisible(true);
+                  lowerCaseAnimation.setVisible(true);                          
+              }else{//animação de letra maiúscula
+                  
+              }//fim if-else
+          });//fim timer
+          animation.setRepeats(false);//desabilita a repetição
+          animation.start();
         }
         catch (IllegalArgumentException uae) {
           final int delayTime = 300;
@@ -134,10 +146,7 @@ public class SwipeView extends javax.swing.JFrame {
       transitionTopPanel.add(label);
   }//fim addLabels
  
-  public static GameLabel getFadeBackgroud(){
-      return (GameLabel)fadeBackgroudLabel;
-  }
-  
+
   /**
    * This method is called from within the constructor to initialize the form.
    * WARNING: Do NOT modify this code. The content of this method is always
@@ -147,9 +156,10 @@ public class SwipeView extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        transitionTopPanel = new javax.swing.JPanel();
-        topPanel = new javax.swing.JPanel();
         fadeBackgroudLabel = new GameLabel();
+        topPanel = new javax.swing.JPanel();
+        transitionTopPanel = new javax.swing.JPanel();
+        lowerCaseAnimation = new view.LowerCaseLetterAnimation();
         workPanel = new javax.swing.JPanel();
         letterPanel = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
@@ -166,44 +176,42 @@ public class SwipeView extends javax.swing.JFrame {
         backPanel = new javax.swing.JPanel();
         backLabel = new javax.swing.JLabel();
 
+        fadeBackgroudLabel.setBackground(new java.awt.Color(254, 1, 5));
+        fadeBackgroudLabel.setMaximumSize(new java.awt.Dimension(900, 600));
+        fadeBackgroudLabel.setMinimumSize(new java.awt.Dimension(900, 600));
+        fadeBackgroudLabel.setVisible(false);
+        //fadeBackgroudLabel.setVisible(false);
+        fadeBackgroudLabel.setPreferredSize(new java.awt.Dimension(900, 600));
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Grafemas");
         setMinimumSize(new java.awt.Dimension(900, 600));
         setResizable(false);
         getContentPane().setLayout(new javax.swing.OverlayLayout(getContentPane()));
 
-        transitionTopPanel.setOpaque(false);
-        transitionTopPanel.setLayout(null);
-
         topPanel.setOpaque(false);
-
-        fadeBackgroudLabel.setBackground(new java.awt.Color(1, 1, 1));
-        fadeBackgroudLabel.setMaximumSize(new java.awt.Dimension(900, 600));
-        fadeBackgroudLabel.setMinimumSize(new java.awt.Dimension(900, 600));
-        fadeBackgroudLabel.setPreferredSize(new java.awt.Dimension(900, 600));
+        topPanel.setRequestFocusEnabled(false);
 
         javax.swing.GroupLayout topPanelLayout = new javax.swing.GroupLayout(topPanel);
         topPanel.setLayout(topPanelLayout);
         topPanelLayout.setHorizontalGroup(
             topPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 900, Short.MAX_VALUE)
-            .addGroup(topPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(fadeBackgroudLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         topPanelLayout.setVerticalGroup(
             topPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 645, Short.MAX_VALUE)
-            .addGroup(topPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, topPanelLayout.createSequentialGroup()
-                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(fadeBackgroudLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 621, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+            .addGap(0, 600, Short.MAX_VALUE)
         );
 
-        transitionTopPanel.add(topPanel);
-        topPanel.setBounds(0, -30, 900, 645);
+        getContentPane().add(topPanel);
 
+        transitionTopPanel.setOpaque(false);
+        transitionTopPanel.setLayout(null);
+        transitionTopPanel.setVisible(false);
         getContentPane().add(transitionTopPanel);
+
+        lowerCaseAnimation.setVisible(false);
+        getContentPane().add(lowerCaseAnimation);
 
         workPanel.setBorder(javax.swing.BorderFactory.createEmptyBorder(25, 20, 25, 0));
         workPanel.setOpaque(false);
@@ -354,6 +362,7 @@ public class SwipeView extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel letterPanel;
+    private view.LowerCaseLetterAnimation lowerCaseAnimation;
     private view.components.TV tV1;
     private javax.swing.JPanel tablePanel;
     private javax.swing.JPanel topPanel;

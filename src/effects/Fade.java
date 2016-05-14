@@ -1,9 +1,14 @@
 package effects;
 
+import entities.FadeComponent;
 import entities.GameLabel;
+import java.awt.Color;
 import java.util.concurrent.Semaphore;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.animation.FadeTransition;
+import javafx.embed.swing.JFXPanel;
+import javafx.util.Duration;
 
 /**
  *
@@ -15,13 +20,11 @@ public class Fade extends Thread {
     private static boolean anitag = false;
     private static final Semaphore mutex = new Semaphore(1);
 
-    private final GameLabel object;//objeto alterado
-    private final double speed;    //taxa de animação
-    private final double distance; //distância entre a cor atual do objeto e a anterior
     public static final boolean FADE_IN = true;//opção fadeIn
     public static final boolean FADE_OUT = false;//opção fadeOut
     private final boolean fade;//opção de efeito escolhida
-    
+
+    private FadeTransition fadeTransition;
 
     /**
      * Método construtor da Classe
@@ -29,21 +32,22 @@ public class Fade extends Thread {
      * @param object GameLabel : componente alterado
      * @param time long : duração da animação
      * @param fade byte: fade Pode assuimir o valor das constantes FADE_IN e
-     * @param finalAlpha float: valor final para o alpha
-     * FADE_OUT
+     * @param finalAlpha float: valor final para o alpha FADE_OUT
      */
-    public Fade(GameLabel object, long time, float finalAlpha, boolean fade) {
-        this.object = object;
+    public Fade(FadeComponent object, long time, float finalAlpha, boolean fade) {
         this.fade = fade;
-        distance = finalAlpha;
-        //calcula a taxa de atualização do fade da label
-        this.speed = (this.distance * 100) / (time * 6);
-        //seta o valor alpha inicial da label
-        if(fade){//se o efeito for fadeIn, então o valor alpha inicial é 0f
-            object.setAlpha(0f);
-        }else{//se o efeito for fadeout, então o valor alpha inicial é 1f
-            object.setAlpha(1f);
-        }//fim if-else
+        fadeTransition = new FadeTransition(Duration.millis(3000), object.getFadeBackground());
+        if(fade){
+            fadeTransition.setFromValue(object.getAlpha());
+            fadeTransition.setToValue(finalAlpha);
+            object.setAlpha(finalAlpha);
+        }else{
+            fadeTransition.setFromValue(object.getAlpha());
+            fadeTransition.setToValue(0.0f);
+            object.setAlpha(finalAlpha);
+        }
+        //fadeTransition.setAutoReverse(!fade);
+        
     }//fim construtor
 
     @Override
@@ -57,28 +61,10 @@ public class Fade extends Thread {
                 self = true;
             }//fim if
             mutex.release();
-            
-            //realiaza o efeito de fade(in/out) na label
-            for(float i=0f; i<=distance;i+=speed){
-                float alpha = object.getAlpha();
-                if (fade) {//incrementa o fade (fadeIn)
-                    alpha += speed;                       
-                } else{    //decrementa o fade (fadeout)
-                    alpha -= speed;
-                }//fim if-else
+            System.out.println("G");
+            fadeTransition.play();
 
-                //limite dos efeitos de fade
-                if (alpha < 0) {
-                    alpha = 0;
-                } else if (alpha > 1) {
-                    alpha = 1;
-                }//fim if-else
-                object.setAlpha(alpha);
-                sleep(100/6);
-           }//fim for
-       
-            
-           if (self) {
+            if (self) {
                 aniMutex.release();
                 anitag = false;
             }//fim if
@@ -94,11 +80,12 @@ public class Fade extends Thread {
      * @param component JComponent : componente que terá sua opacidade alterada
      * @param time long : tempo da animação
      * @param finalAlpha float: valor final do alpha
+     * @return fade Fade
      */
-    public static void fadeIn(GameLabel component, long time, float finalAlpha) {
-        component.setOpaque(true);
+    public static Fade fadeIn(FadeComponent component, long time, float finalAlpha) {
         Fade fade = new Fade(component, time, finalAlpha, FADE_IN);
         fade.start();
+        return fade;
     }//fim fadeIn
 
     /**
@@ -108,10 +95,12 @@ public class Fade extends Thread {
      * @param component JComponent : componente que terá sua opacidade alterada
      * @param time long : tempo da animação
      * @param finalAlpha float: valor final para alpha
+     * @return fade Fade
      */
-    public static void fadeOut(GameLabel component, long time, float finalAlpha) {
-        component.setOpaque(true);
+    public static Fade fadeOut(FadeComponent component, long time,  float finalAlpha) {
         Fade fade = new Fade(component, time, finalAlpha, FADE_OUT);
         fade.start();
+        return fade;
     }//fim fadeOut
 }//fim class
+

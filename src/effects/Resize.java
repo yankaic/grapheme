@@ -104,15 +104,17 @@ public class Resize extends Thread {
    * @param newSize Dimension: novo tamanho do objeto
    * @param time  long : tempo da animação em milissegundos
    * 
-   * zxas
-   * a
-   * sa
-   * s
-   * a
+
    */
   public static void resizeObject(JComponent objeto, Dimension newSize, long time) {
     Resize animacao = new Resize(new GameObject(objeto), newSize, time);
     animacao.start();
+  }//fim moveObject
+  
+  public static Resize resize (JComponent objeto, Dimension newSize, long time) {
+    Resize animacao = new Resize(new GameObject(objeto), newSize, time);
+    animacao.start();
+    return animacao;
   }//fim moveObject
 
 
