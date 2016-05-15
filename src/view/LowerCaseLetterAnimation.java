@@ -17,6 +17,7 @@ import java.net.URL;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.Timer;
 import view.components.Letter;
 
@@ -26,10 +27,19 @@ import view.components.Letter;
  */
 public class LowerCaseLetterAnimation extends javax.swing.JPanel {
 
+    //estado da animação : tocando ou não
     private boolean isPlaying;
+    
+    //estado do audio  : tocando ou não
     private boolean isMute;
+    
+    //objeto que realiza a animação
     private LetterTransition letterTransition;
+    
+    //letra sendo animada
     private Letter letter;
+    
+    //background do painel. Componente hábil para a animação de fade in e fade out
     private FadeComponent fadeComponent;
 
     /**
@@ -110,7 +120,6 @@ public class LowerCaseLetterAnimation extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void play_pauseButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_play_pauseButtonActionPerformed
-
         play();
     }//GEN-LAST:event_play_pauseButtonActionPerformed
 
@@ -127,7 +136,7 @@ public class LowerCaseLetterAnimation extends javax.swing.JPanel {
     }//GEN-LAST:event_closeButtonActionPerformed
 
     /**
-     * Método que executa o audio de uma animação
+     * Método que executa inicia ou retoma uma animação
      */
     public void play() {
         if (isPlaying) {//pausa a animação
@@ -139,11 +148,10 @@ public class LowerCaseLetterAnimation extends javax.swing.JPanel {
             play_pauseButton.setIcon(new ImageIcon(iconPath));
             if (letterTransition.isAlive()) {
                 letterTransition.play();
-
             } else if (letter != null) {
                 letterTransition = new LetterTransition(letter, this.getSize(), LetterTransition.LOWER_CASE);
                 letterTransition.start();
-            }
+            }//fim if-else
         }//fim if-else
         isPlaying = !isPlaying;
     }//fim play
@@ -159,19 +167,18 @@ public class LowerCaseLetterAnimation extends javax.swing.JPanel {
     }//fim replay
 
     /**
-     * Método que silencia um audio de uma animação
+     * Método que silencia ou retoma um audio de uma animação
      */
     public void mute() {
         if (isMute) {//habilita o audio
             URL iconPath = getClass().getResource(File.separator + "icons" + File.separator + "audio.png");
             mute.setIcon(new ImageIcon(iconPath));
             letterTransition.enableAudio();
-
         } else {//desabilita o audio
             URL iconPath = getClass().getResource(File.separator + "icons" + File.separator + "mute.png");
             mute.setIcon(new ImageIcon(iconPath));
             letterTransition.disableAudio();
-        }
+        }//fim if-else
         isMute = !isMute;
     }//fim mute
 
@@ -195,32 +202,43 @@ public class LowerCaseLetterAnimation extends javax.swing.JPanel {
 
     @Override
     public void setVisible(boolean visibility) {
+        //timer para tornar visivel o painel da animação
         Timer t = new Timer((visibility) ? 500 : 2500, (ActionEvent e) -> {
             super.setVisible(visibility);
         });
         t.setRepeats(false);
         t.start();
 
+        //realiza o fade no fundo do painel
         LetterTransition.fade(fadeComponent, 0.7f, visibility);
 
-        Timer t1 = new Timer((visibility) ? 500 : 1800, (ActionEvent e) -> {
+        //timer para tornar visivel os controles da animação
+        Timer t1 = new Timer((visibility) ? 500 : 1000, (ActionEvent e) -> {
             controlPanel.setVisible(visibility);
         });
         t1.setRepeats(false);
         t1.start();
 
+        //timer para iniciar a animação
         if (visibility) {
             Timer t2 = new Timer(1500, (ActionEvent e) -> {
                 play_pauseButton.doClick();
             });
             t2.setRepeats(false);
             t2.start();
-        }
+        }//fim if
     }//fim setVisible
 
 
+    /**
+     * Método que retorna o botão que encerra a animação
+     * @return 
+     */
+    public static JButton getCloseButton(){
+        return closeButton;
+    }//fim getCloseButton
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton closeButton;
+    private static javax.swing.JButton closeButton;
     private javax.swing.JPanel controlPanel;
     private javax.swing.JButton mute;
     private javax.swing.JButton play_pauseButton;

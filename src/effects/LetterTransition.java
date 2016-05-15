@@ -11,6 +11,8 @@ import entities.GameObject;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Point;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -19,6 +21,8 @@ import java.util.logging.Logger;
 import javafx.scene.media.AudioClip;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+import javax.swing.Timer;
+import view.LowerCaseLetterAnimation;
 import view.SwipeView;
 import view.components.Letter;
 
@@ -51,24 +55,34 @@ public class LetterTransition extends Thread {
     //tamanho final da label sendo animada
     private Dimension finalDimension;
 
+    //audio da animação 
     private AudioClip audioClip;
 
+    //path do audio
     private String audioSource;
 
+    //objeto responsável pelas translações dos componentes
     private static Translation tranlation;
 
+    //objeto responsável pelos redimensionamentos dos componentes
     private static Resize resize;
 
+    //imagens apresentadas na animação
     private GameLabel image;
 
+    //objeto responsável pela animação de fade de componentes
     private static Fade fade;
-
+    
+    //variável que verifica de a animação está rodando
+    private boolean isRunning;
+  
+    
     /**
      * Método construtor da classe de animação da transição de uma letra
      *
      * @param letter Letter : letra que será animada
      * @param type boolean : tipo da animação pode assumir os valores:
-     * UPPER_CASE ou LOWER_CASE
+     *                        UPPER_CASE ou LOWER_CASE
      * @param viewDimension Dimension: tamanho da janela
      */
     public LetterTransition(Letter letter, Dimension viewDimension, boolean type) {
@@ -83,9 +97,12 @@ public class LetterTransition extends Thread {
 
     }//fim construtor
 
+    /**
+     * Construtor vazio do objeto
+     */
     public LetterTransition() {
-
-    }
+        
+    }//fim construtor
 
     /**
      * Método que faz a animação
@@ -94,8 +111,8 @@ public class LetterTransition extends Thread {
     @SuppressWarnings("empty-statement")
     public void run() {
         try {
-
-            if (type) {
+            isRunning = true;
+            if (type) {//animação das letras maiúsculas
 
             } //animação das letras minúsculas
             else {
@@ -134,12 +151,19 @@ public class LetterTransition extends Thread {
 
                     Thread.sleep(4000);
                 }//fim for
+                
             } //fim if-else
+            
         } catch (InterruptedException | MalformedURLException ex) {
             Logger.getLogger(LetterTransition.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        //fim try-catch
-        //fim try-catch
+        } //fim try-catch
+        isRunning = false;
+        Timer closePanelAnimation = new Timer(1500, (ActionEvent e) -> {
+            if(!isRunning)
+                LowerCaseLetterAnimation.getCloseButton().doClick();
+        });
+        closePanelAnimation.setRepeats(false);
+        closePanelAnimation.start();
     }//fim run
 
     /**
@@ -238,4 +262,5 @@ public class LetterTransition extends Thread {
             fade  = Fade.fadeOut(fadeComponent, 1000, 0f);  
         }//fim if-else
     }//fim fade
+
 }//fim class

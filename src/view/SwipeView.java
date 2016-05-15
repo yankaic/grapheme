@@ -145,6 +145,10 @@ public class SwipeView extends javax.swing.JFrame {
   public static void addTransitionLabels(JLabel label){
       transitionTopPanel.add(label);
   }//fim addLabels
+  
+  public LowerCaseLetterAnimation getLowerCaseAnimetionPanel(){
+      return lowerCaseAnimation;
+  }
  
 
   /**

@@ -24,6 +24,7 @@ public class Fade extends Thread {
     public static final boolean FADE_OUT = false;//opção fadeOut
     private final boolean fade;//opção de efeito escolhida
 
+    //Componente (JAVAFX) responsável pela animação de fade
     private FadeTransition fadeTransition;
 
     /**
@@ -36,18 +37,17 @@ public class Fade extends Thread {
      */
     public Fade(FadeComponent object, long time, float finalAlpha, boolean fade) {
         this.fade = fade;
-        fadeTransition = new FadeTransition(Duration.millis(3000), object.getFadeBackground());
-        if(fade){
+        fadeTransition = new FadeTransition(Duration.millis(time), object.getFadeBackground());
+        
+        if(fade){//fade in
             fadeTransition.setFromValue(object.getAlpha());
             fadeTransition.setToValue(finalAlpha);
             object.setAlpha(finalAlpha);
-        }else{
+        }else{//fade out
             fadeTransition.setFromValue(object.getAlpha());
             fadeTransition.setToValue(0.0f);
             object.setAlpha(finalAlpha);
-        }
-        //fadeTransition.setAutoReverse(!fade);
-        
+        }//fim if-else        
     }//fim construtor
 
     @Override
@@ -61,8 +61,8 @@ public class Fade extends Thread {
                 self = true;
             }//fim if
             mutex.release();
-            System.out.println("G");
-            fadeTransition.play();
+            
+            fadeTransition.play();//inicia a animação de fade
 
             if (self) {
                 aniMutex.release();
