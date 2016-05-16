@@ -33,235 +33,240 @@ import view.components.Letter;
  */
 public class LetterTransition extends Thread {
 
-    //letra cuja transição será animada
-    private Letter letter;
+  //letra cuja transição será animada
+  private Letter letter;
 
-    //typo da transição
-    private boolean type;
-    public static boolean UPPER_CASE = true;
-    public static boolean LOWER_CASE = false;
+  //typo da transição
+  private boolean type;
+  public static boolean UPPER_CASE = true;
+  public static boolean LOWER_CASE = false;
 
-    //tamanho da tela
-    private Dimension viewDimension;
+  //tamanho da tela
+  private Dimension viewDimension;
 
-    //posição do centro da tela
-    private Point finalPosition;
+  //posição do centro da tela
+  private Point finalPosition;
 
-    //posição inicial da label sendo animada
-    private Point initialPosition;
+  //posição inicial da label sendo animada
+  private Point initialPosition;
 
-    //tamanho inicial da label sendo animada
-    private Dimension initialDimension;
+  //tamanho inicial da label sendo animada
+  private Dimension initialDimension;
 
-    //tamanho final da label sendo animada
-    private Dimension finalDimension;
+  //tamanho final da label sendo animada
+  private Dimension finalDimension;
 
-    //audio da animação 
-    private AudioClip audioClip;
+  //audio da animação 
+  private AudioClip audioClip;
 
-    //path do audio
-    private String audioSource;
+  //path do audio
+  private String audioSource;
 
-    //objeto responsável pelas translações dos componentes
-    private static Translation tranlation;
+  //objeto responsável pelas translações dos componentes
+  private static Translation tranlation;
 
-    //objeto responsável pelos redimensionamentos dos componentes
-    private static Resize resize;
+  //objeto responsável pelos redimensionamentos dos componentes
+  private static Resize resize;
 
-    //imagens apresentadas na animação
-    private GameLabel image;
+  //imagens apresentadas na animação
+  private GameLabel image;
 
-    //objeto responsável pela animação de fade de componentes
-    private static Fade fade;
-    
-    //variável que verifica de a animação está rodando
-    private boolean isRunning;
-  
-    
-    /**
-     * Método construtor da classe de animação da transição de uma letra
-     *
-     * @param letter Letter : letra que será animada
-     * @param type boolean : tipo da animação pode assumir os valores:
-     *                        UPPER_CASE ou LOWER_CASE
-     * @param viewDimension Dimension: tamanho da janela
-     */
-    public LetterTransition(Letter letter, Dimension viewDimension, boolean type) {
-        this.letter = letter;//letra sendo animada
-        this.type = type;//tipo da animação
+  //objeto responsável pela animação de fade de componentes
+  private static Fade fade;
 
-        //configurações default
-        initialPosition = new Point(770, 150); //posição inicial das labels sendo animadas
-        initialDimension = new Dimension(0, 0); //dimensão inicial da label
-        finalDimension = new Dimension(255, 369);//dimensão final da label
-        this.viewDimension = viewDimension;
+  //variável que verifica de a animação está rodando
+  private boolean isRunning;
 
-    }//fim construtor
+  /**
+   * Método construtor da classe de animação da transição de uma letra
+   *
+   * @param letter Letter : letra que será animada
+   * @param type boolean : tipo da animação pode assumir os valores: UPPER_CASE
+   * ou LOWER_CASE
+   * @param viewDimension Dimension: tamanho da janela
+   */
+  public LetterTransition(Letter letter, Dimension viewDimension, boolean type) {
+    this.letter = letter;//letra sendo animada
+    this.type = type;//tipo da animação
 
-    /**
-     * Construtor vazio do objeto
-     */
-    public LetterTransition() {
-        
-    }//fim construtor
+    //configurações default
+    initialPosition = new Point(770, 150); //posição inicial das labels sendo animadas
+    initialDimension = new Dimension(0, 0); //dimensão inicial da label
+    finalDimension = new Dimension(255, 369);//dimensão final da label
+    this.viewDimension = viewDimension;
 
-    /**
-     * Método que faz a animação
-     */
-    @Override
-    @SuppressWarnings("empty-statement")
-    public void run() {
-        try {
-            isRunning = true;
-            if (type) {//animação das letras maiúsculas
+  }//fim construtor
 
-            } //animação das letras minúsculas
-            else {
-                for (int countImages = 1; countImages <= 3; countImages++) {
-                    //icone do examplo
-                    String path = letter.getLowerCasePath() + "examples"
-                            + Main.BAR + countImages + Main.BAR;
-                    ImageIcon icon = new ImageIcon(new URL(path + "image.png"));
-                    image = new GameLabel();
-                    image.setIcon(icon);
+  /**
+   * Construtor vazio do objeto
+   */
+  public LetterTransition() {
 
-                    //posição e dimensão iniciais da label
-                    image.setLocation(initialPosition);
-                    image.setSize(initialDimension);
+  }//fim construtor
 
-                    //calculando a posição final e a dimensão final
-                    finalDimension = new Dimension(icon.getIconWidth(), icon.getIconHeight());
-                    finalPosition = new Point((int) (viewDimension.width / 2) - (finalDimension.width / 2),
-                            (int) (viewDimension.height / 2) - (finalDimension.height / 2));
+  /**
+   * Método que faz a animação
+   */
+  @Override
+  @SuppressWarnings("empty-statement")
+  public void run() {
+    try {
+      isRunning = true;
+      if (type) {//animação das letras maiúsculas
 
-                    //adicionando o exemplo na janela
-                    SwipeView.addTransitionLabels(image);
+      } //animação das letras minúsculas
+      else {
+        for (int countImages = 1; countImages <= 3; countImages++) {
+          //icone do examplo
+          String path = letter.getLowerCasePath() + "examples"
+                  + Main.BAR + countImages + Main.BAR;
+          ImageIcon icon = new ImageIcon(new URL(path + "image.png"));
+          image = new GameLabel();
+          image.setIcon(icon);
 
-                    //animando a translação e redimensionamento da label
-                    tranlation = Translation.move(image, finalPosition, 2000);
-                    resize = Resize.resize(image, finalDimension, 2000);
+          //posição e dimensão iniciais da label
+          image.setLocation(initialPosition);
+          image.setSize(initialDimension);
 
-                    // audioSource = path + "audio.aiff";
-                    //audioClip = new AudioClip(audioSource);
-                    //              audioClip.play();
-                    sleep(6000);
+          //calculando a posição final e a dimensão final
+          finalDimension = new Dimension(icon.getIconWidth(), icon.getIconHeight());
+          finalPosition = new Point((int) (viewDimension.width / 2) - (finalDimension.width / 2),
+                  (int) (viewDimension.height / 2) - (finalDimension.height / 2));
 
-                    //animando o retorno da label para sua posição inicial
-                    tranlation = Translation.move(image, initialPosition, 2000);
-                    resize = Resize.resize(image, initialDimension, 2000);
+          //adicionando o exemplo na janela
+          SwipeView.addTransitionLabels(image);
 
-                    Thread.sleep(4000);
-                }//fim for
-                
-            } //fim if-else
-            
-        } catch (InterruptedException | MalformedURLException ex) {
-            Logger.getLogger(LetterTransition.class.getName()).log(Level.SEVERE, null, ex);
-        } //fim try-catch
-        isRunning = false;
-        Timer closePanelAnimation = new Timer(1500, (ActionEvent e) -> {
-            if(!isRunning)
-                LowerCaseLetterAnimation.getCloseButton().doClick();
-        });
-        closePanelAnimation.setRepeats(false);
-        closePanelAnimation.start();
-    }//fim run
+          //animando a translação e redimensionamento da label
+          tranlation = Translation.move(image, finalPosition, 2000);
+          resize = Resize.resize(image, finalDimension, 2000);
 
-    /**
-     * Método que realiza a transição de uma letra minuscúla a animação de uma
-     * letra minúscula é mostrar uma label com a imagem dos objetos da letra e o
-     * áudio das palavras mostradas nas imagens
-     *
-     * @param letter Letter : letra que será animada
-     * @param viewSize Point : tamanho (width, height) da tela
-     */
-    public static void lowerCaseLetter(Letter letter, Dimension viewDimension) {
-        new LetterTransition(letter, viewDimension, LOWER_CASE).start();
-    }//fim lowerCaseLetter
+          audioSource = path + "audio.aiff";
+          audioClip = new AudioClip(audioSource);
+          audioClip.play();
+          sleep(6000);
 
-    /**
-     * Método que realiza a transição de uma letra maiúscula a animação de uma
-     * letra maiúscula é mostrar um video da pronuncia de uma palavra
-     *
-     * @param letter Letter : letra que será animada
-     * @param viewSize Point: tamanho (width, height) da tela
-     */
-    public static void upperCaseLetter(Letter letter, Dimension viewDimension) {
-        new LetterTransition(letter, viewDimension, UPPER_CASE).start();
-    }//fim upperCaseLetter
+          //animando o retorno da label para sua posição inicial
+          tranlation = Translation.move(image, initialPosition, 2000);
+          resize = Resize.resize(image, initialDimension, 2000);
 
-    /**
-     * Método que pausa a animação 
-     */
-    public void pause() {
-        tranlation.suspend();
-        resize.suspend();
-        this.suspend();
-    }//fim pause
+          Thread.sleep(4000);
+        }//fim for
 
-    /**
-     * Método que inicia ou retoma a animação
-     */
-    public void play() {
-        this.resume();
-        resize.resume();
-        tranlation.resume();
-    }//fim play
+      } //fim if-else
 
-    /**
-     * Método que reinicia a animação
-     * @return LetterTransition
-     */
-    public LetterTransition replay() {
-        LetterTransition letterTransition = new LetterTransition(letter, viewDimension, type);
-        letterTransition.start();
-        image.setVisible(false);
-        this.stop();
-        return letterTransition;
-    }//fim replay
+    }
+    catch (InterruptedException | MalformedURLException ex) {
+      Logger.getLogger(LetterTransition.class.getName()).log(Level.SEVERE, null, ex);
+    } //fim try-catch
+    isRunning = false;
+    Timer closePanelAnimation = new Timer(1500, (ActionEvent e) -> {
+      if (!isRunning) {
+        LowerCaseLetterAnimation.getCloseButton().doClick();
+      }
+    });
+    closePanelAnimation.setRepeats(false);
+    closePanelAnimation.start();
+  }//fim run
 
-    /**
-     * Método que habilita o audio da animação
-     */
-    public void enableAudio() {
+  /**
+   * Método que realiza a transição de uma letra minuscúla a animação de uma
+   * letra minúscula é mostrar uma label com a imagem dos objetos da letra e o
+   * áudio das palavras mostradas nas imagens
+   *
+   * @param letter Letter : letra que será animada
+   * @param viewSize Point : tamanho (width, height) da tela
+   */
+  public static void lowerCaseLetter(Letter letter, Dimension viewDimension) {
+    new LetterTransition(letter, viewDimension, LOWER_CASE).start();
+  }//fim lowerCaseLetter
 
-    }//fim enableAudio
+  /**
+   * Método que realiza a transição de uma letra maiúscula a animação de uma
+   * letra maiúscula é mostrar um video da pronuncia de uma palavra
+   *
+   * @param letter Letter : letra que será animada
+   * @param viewSize Point: tamanho (width, height) da tela
+   */
+  public static void upperCaseLetter(Letter letter, Dimension viewDimension) {
+    new LetterTransition(letter, viewDimension, UPPER_CASE).start();
+  }//fim upperCaseLetter
 
-    /**
-     * Método que desabilita o audio da animação
-     */
-    public void disableAudio() {
+  /**
+   * Método que pausa a animação
+   */
+  public void pause() {
+    tranlation.suspend();
+    resize.suspend();
+    this.suspend();
+  }//fim pause
 
-    }//fim disableAudio
+  /**
+   * Método que inicia ou retoma a animação
+   */
+  public void play() {
+    this.resume();
+    resize.resume();
+    tranlation.resume();
+  }//fim play
 
-    /**
-     * Método que encerra a animação
-     */
-    public void close() {
-        if (tranlation != null) {
-            tranlation.stop();
-        }//fim if
-        if (resize != null) {
-            resize.stop();
-        }//fim if
-        if (image != null) {
-            image.setVisible(false);
-        }//fim if
-        this.stop();
-    }//fim close
+  /**
+   * Método que reinicia a animação
+   *
+   * @return LetterTransition
+   */
+  public LetterTransition replay() {
+    LetterTransition letterTransition = new LetterTransition(letter, viewDimension, type);
+    letterTransition.start();
+    image.setVisible(false);
+    this.stop();
+    return letterTransition;
+  }//fim replay
 
-    /**
-     * Método que inicia uma animação dependendo da visibilidade do painel lowerCaseLetterAnimation
-     * @param fadeComponent FadeComponent
-     * @param fadeScale float 
-     * @param visibility boolean 
-     */
-    public static void fade(FadeComponent fadeComponent, float fadeScale, boolean visibility) {
-        if(visibility){//fade in
-            fade = Fade.fadeIn(fadeComponent, 3000, fadeScale);
-        }else{//fade out
-            fade  = Fade.fadeOut(fadeComponent, 1000, 0f);  
-        }//fim if-else
-    }//fim fade
+  /**
+   * Método que habilita o audio da animação
+   */
+  public void enableAudio() {
+
+  }//fim enableAudio
+
+  /**
+   * Método que desabilita o audio da animação
+   */
+  public void disableAudio() {
+
+  }//fim disableAudio
+
+  /**
+   * Método que encerra a animação
+   */
+  public void close() {
+    if (tranlation != null) {
+      tranlation.stop();
+    }//fim if
+    if (resize != null) {
+      resize.stop();
+    }//fim if
+    if (image != null) {
+      image.setVisible(false);
+    }//fim if
+    this.stop();
+  }//fim close
+
+  /**
+   * Método que inicia uma animação dependendo da visibilidade do painel
+   * lowerCaseLetterAnimation
+   *
+   * @param fadeComponent FadeComponent
+   * @param fadeScale float
+   * @param visibility boolean
+   */
+  public static void fade(FadeComponent fadeComponent, float fadeScale, boolean visibility) {
+    if (visibility) {//fade in
+      fade = Fade.fadeIn(fadeComponent, 3000, fadeScale);
+    }
+    else {//fade out
+      fade = Fade.fadeOut(fadeComponent, 1000, 0f);
+    }//fim if-else
+  }//fim fade
 
 }//fim class
