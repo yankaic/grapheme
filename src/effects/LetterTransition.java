@@ -8,6 +8,7 @@ package effects;
 import entities.FadeComponent;
 import entities.GameLabel;
 import entities.GameObject;
+import graphemes.Main;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Point;
@@ -119,7 +120,7 @@ public class LetterTransition extends Thread {
                 for (int countImages = 1; countImages <= 3; countImages++) {
                     //icone do examplo
                     String path = letter.getLowerCasePath() + "examples"
-                            + File.separator + countImages + File.separator;
+                            + Main.BAR + countImages + Main.BAR;
                     ImageIcon icon = new ImageIcon(new URL(path + "image.png"));
                     image = new GameLabel();
                     image.setIcon(icon);

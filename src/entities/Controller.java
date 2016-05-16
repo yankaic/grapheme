@@ -1,5 +1,6 @@
 package entities;
 
+import graphemes.Main;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -55,7 +56,7 @@ public class Controller {
     public void restartListOfFiles() {
         try {
             pathLetters = new ArrayList<>();//recria a lista de files
-            File directoryLetters = new File(getClass().getResource(File.separator + "letters").toURI());//diretório dos files
+            File directoryLetters = new File(getClass().getResource(Main.BAR + "letters").toURI());//diretório dos files
             for (int i = 0; i < directoryLetters.list().length; i++) {
                 pathLetters.add(directoryLetters.listFiles()[i]);//recarregar os files
             }//fim for      
@@ -72,7 +73,7 @@ public class Controller {
     @SuppressWarnings("unchecked")
     private void reloadFiles() {
         try {
-            File f = new File(getClass().getResource(File.separator + "files" + File.separator + "list.graphemes").toURI());
+            File f = new File(getClass().getResource(Main.BAR + "files" + Main.BAR + "list.graphemes").toURI());
             inputStream = new FileInputStream(f);//stream para a leitura
             input = new ObjectInputStream(inputStream);//stream para a leitura do objeto
             pathLetters = (ArrayList<File>) input.readObject();//lê a lista atual do jogo
@@ -107,7 +108,7 @@ public class Controller {
      */
     public void saveFiles() {
         try {
-            outputStream = new FileOutputStream(new File(getClass().getResource(File.separator + "files" + File.separator + "list.graphemes").toURI()));//stream para o arquivo
+            outputStream = new FileOutputStream(new File(getClass().getResource(Main.BAR + "files" + Main.BAR + "list.graphemes").toURI()));//stream para o arquivo
             output = new ObjectOutputStream(outputStream);//writter para o objeto
             output.writeObject(pathLetters);//escreve a lista de files no arquivo
         } catch (FileNotFoundException ex) {//arquivo não encontrado

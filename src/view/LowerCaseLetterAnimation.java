@@ -7,6 +7,7 @@ package view;
 
 import effects.LetterTransition;
 import entities.FadeComponent;
+import graphemes.Main;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
@@ -140,11 +141,11 @@ public class LowerCaseLetterAnimation extends javax.swing.JPanel {
      */
     public void play() {
         if (isPlaying) {//pausa a animação
-            URL iconPath = getClass().getResource(File.separator + "icons" + File.separator + "play.png");
+            URL iconPath = getClass().getResource(Main.BAR + "icons" + Main.BAR + "play.png");
             play_pauseButton.setIcon(new ImageIcon(iconPath));
             letterTransition.pause();
         } else {//retorna a animação
-            URL iconPath = getClass().getResource(File.separator + "icons" + File.separator + "pause.png");
+            URL iconPath = getClass().getResource(Main.BAR + "icons" + Main.BAR + "pause.png");
             play_pauseButton.setIcon(new ImageIcon(iconPath));
             if (letterTransition.isAlive()) {
                 letterTransition.play();
@@ -160,7 +161,7 @@ public class LowerCaseLetterAnimation extends javax.swing.JPanel {
      * Método que reexecuta uma animação
      */
     public void replay() {
-        URL iconPath = getClass().getResource(File.separator + "icons" + File.separator + "pause.png");
+        URL iconPath = getClass().getResource(Main.BAR + "icons" + Main.BAR + "pause.png");
         play_pauseButton.setIcon(new ImageIcon(iconPath));
         isPlaying = true;
         letterTransition = letterTransition.replay();
@@ -171,11 +172,11 @@ public class LowerCaseLetterAnimation extends javax.swing.JPanel {
      */
     public void mute() {
         if (isMute) {//habilita o audio
-            URL iconPath = getClass().getResource(File.separator + "icons" + File.separator + "audio.png");
+            URL iconPath = getClass().getResource(Main.BAR + "icons" + Main.BAR + "audio.png");
             mute.setIcon(new ImageIcon(iconPath));
             letterTransition.enableAudio();
         } else {//desabilita o audio
-            URL iconPath = getClass().getResource(File.separator + "icons" + File.separator + "mute.png");
+            URL iconPath = getClass().getResource(Main.BAR + "icons" + Main.BAR + "mute.png");
             mute.setIcon(new ImageIcon(iconPath));
             letterTransition.disableAudio();
         }//fim if-else

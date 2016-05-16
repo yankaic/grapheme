@@ -12,6 +12,7 @@ import view.SwipeView;
  * @author Yan Kaic
  */
 public class Main {
+  public static final char BAR = '/';
 
   /**
    * @param args the command line arguments
