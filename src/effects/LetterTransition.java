@@ -20,6 +20,9 @@ import java.net.URL;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.scene.media.AudioClip;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.Timer;
@@ -141,9 +144,12 @@ public class LetterTransition extends Thread {
                     tranlation = Translation.move(image, finalPosition, 2000);
                     resize = Resize.resize(image, finalDimension, 2000);
 
-                    // audioSource = path + "audio.aiff";
-                    //audioClip = new AudioClip(audioSource);
-                    //              audioClip.play();
+                    
+                     audioSource = path + "audio.wav";
+                     audioClip = new AudioClip(audioSource);
+                     audioClip.play();
+                     
+                     
                     sleep(6000);
 
                     //animando o retorno da label para sua posição inicial
