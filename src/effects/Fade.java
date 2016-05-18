@@ -38,16 +38,10 @@ public class Fade extends Thread {
     public Fade(FadeComponent object, long time, float finalAlpha, boolean fade) {
         this.fade = fade;
         fadeTransition = new FadeTransition(Duration.millis(time), object.getFadeBackground());
-        
-        if(fade){//fade in
-            fadeTransition.setFromValue(object.getAlpha());
-            fadeTransition.setToValue(finalAlpha);
-            object.setAlpha(finalAlpha);
-        }else{//fade out
-            fadeTransition.setFromValue(object.getAlpha());
-            fadeTransition.setToValue(0.0f);
-            object.setAlpha(finalAlpha);
-        }//fim if-else        
+
+        fadeTransition.setFromValue(object.getAlpha());
+        fadeTransition.setToValue(finalAlpha);
+        object.setAlpha(finalAlpha);
     }//fim construtor
 
     @Override
@@ -61,7 +55,7 @@ public class Fade extends Thread {
                 self = true;
             }//fim if
             mutex.release();
-            
+
             fadeTransition.play();//inicia a animação de fade
 
             if (self) {
@@ -97,7 +91,7 @@ public class Fade extends Thread {
      * @param finalAlpha float: valor final para alpha
      * @return fade Fade
      */
-    public static Fade fadeOut(FadeComponent component, long time,  float finalAlpha) {
+    public static Fade fadeOut(FadeComponent component, long time, float finalAlpha) {
         Fade fade = new Fade(component, time, finalAlpha, FADE_OUT);
         fade.start();
         return fade;

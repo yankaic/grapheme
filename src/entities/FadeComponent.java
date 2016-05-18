@@ -20,6 +20,7 @@ import javafx.scene.shape.Rectangle;
 public class FadeComponent extends JFXPanel {
     Rectangle background;
     float alpha;
+    
     /**
      * Construtor da classe
      */
