@@ -20,6 +20,9 @@ import java.net.URL;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.scene.media.AudioClip;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.Timer;
