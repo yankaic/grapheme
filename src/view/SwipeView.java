@@ -12,7 +12,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.Timer;
 import view.components.Form;
-import view.components.Letter;
+import entities.Letter;
 
 /**
  *

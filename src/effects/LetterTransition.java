@@ -25,7 +25,9 @@ import javax.swing.JLabel;
 import javax.swing.Timer;
 import view.LowerCaseLetterAnimation;
 import view.SwipeView;
-import view.components.Letter;
+import entities.Letter;
+import java.net.URI;
+import java.net.URISyntaxException;
 
 /**
  *
@@ -116,54 +118,64 @@ public class LetterTransition extends Thread {
 
       } //animação das letras minúsculas
       else {
-        for (int countImages = 1; countImages <= 3; countImages++) {
+        URI uri = new URI(letter.getLowerCasePath()+"examples");
+        File file = new File(uri);
+        int maxImages = 3;//file.list().length;
+        image = new GameLabel();
+        
+        for (int countImages = 1; countImages <=maxImages; countImages++) {
           //icone do examplo
           String path = letter.getLowerCasePath() + "examples"
                   + Main.BAR + countImages + Main.BAR;
           ImageIcon icon = new ImageIcon(new URL(path + "image.png"));
-          image = new GameLabel();
           image.setIcon(icon);
-
-          //posição e dimensão iniciais da label
-          image.setLocation(initialPosition);
-          image.setSize(initialDimension);
-
-          //calculando a posição final e a dimensão final
-          finalDimension = new Dimension(icon.getIconWidth(), icon.getIconHeight());
-          finalPosition = new Point((int) (viewDimension.width / 2) - (finalDimension.width / 2),
-                  (int) (viewDimension.height / 2) - (finalDimension.height / 2));
-
-          //adicionando o exemplo na janela
-          SwipeView.addTransitionLabels(image);
-
+       
           //animando a translação e redimensionamento da label
-          tranlation = Translation.move(image, finalPosition, 2000);
-          resize = Resize.resize(image, finalDimension, 2000);
-
+          if(countImages == 1){//a animação de translação e redimensionamento iniciais
+                               //só ocorrem para a primeira imagem da animação
+           
+            //calculando a posição final e a dimensão final
+            finalDimension = new Dimension(icon.getIconWidth(), icon.getIconHeight());
+            finalPosition = new Point((int) (viewDimension.width / 2) - (finalDimension.width / 2),
+                  (int) (viewDimension.height / 2) - (finalDimension.height / 2));
+                    
+            //posição e dimensão iniciais da label
+            image.setLocation(initialPosition);
+            image.setSize(initialDimension);
+             
+            //adicionando o exemplo na janela
+            SwipeView.addTransitionLabels(image);
+          
+            tranlation = Translation.move(image, finalPosition,2000);
+            resize = Resize.resize(image, finalDimension, 2000);
+          }//fim if
+         
           audioSource = path + "audio.aiff";
           audioClip = new AudioClip(audioSource);
           audioClip.play();
-          sleep(6000);
+          sleep(3000);
 
           //animando o retorno da label para sua posição inicial
-          tranlation = Translation.move(image, initialPosition, 2000);
-          resize = Resize.resize(image, initialDimension, 2000);
-
-          Thread.sleep(4000);
+          if(countImages==maxImages){//a animação de transalção e redimensionamento finais
+                                       //só ocorrem para a última imagem da animação
+            tranlation = Translation.move(image, initialPosition, 2000);
+            resize = Resize.resize(image, initialDimension, 2000);
+          }//fim if
+          Thread.sleep(3000);
         }//fim for
-
       } //fim if-else
-
     }
-    catch (InterruptedException | MalformedURLException ex) {
+    catch (InterruptedException | MalformedURLException | URISyntaxException ex) {
       Logger.getLogger(LetterTransition.class.getName()).log(Level.SEVERE, null, ex);
-    } //fim try-catch
+    }
+      //fim try-catch
+       //fim try-catch
     isRunning = false;
     Timer closePanelAnimation = new Timer(1500, (ActionEvent e) -> {
       if (!isRunning) {
         LowerCaseLetterAnimation.getCloseButton().doClick();
-      }
-    });
+      }//fim if
+    });//fim timer
     closePanelAnimation.setRepeats(false);
     closePanelAnimation.start();
   }//fim run
