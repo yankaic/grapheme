@@ -31,7 +31,7 @@ public class SwipeView extends javax.swing.JFrame {
   }
 
   private void init() {
-    Letter letter = new Letter("A");
+    Letter letter = new Letter("R");
     letter.setLocation(900, 10);
     letterPanel.add(letter);
     Translation t = new Translation(letter, new Point(10, 10), 1400);
@@ -162,8 +162,8 @@ public class SwipeView extends javax.swing.JFrame {
     tV1 = new view.components.TV();
     tablePanel = new javax.swing.JPanel();
     itensTable = new javax.swing.JPanel();
-    form1 = new view.components.Form();
-    form2 = new view.components.Form("U");
+    form1 = new view.components.Form("D");
+    form2 = new view.components.Form("R");
     form5 = new view.components.Form();
     form4 = new view.components.Form();
     form3 = new view.components.Form();
@@ -223,7 +223,6 @@ public class SwipeView extends javax.swing.JFrame {
     workPanel.setLayout(new java.awt.BorderLayout());
 
     letterPanel.setBackground(new java.awt.Color(234, 227, 212));
-    letterPanel.setOpaque(false);
     letterPanel.setPreferredSize(new java.awt.Dimension(860, 130));
 
     javax.swing.GroupLayout letterPanelLayout = new javax.swing.GroupLayout(letterPanel);
@@ -266,7 +265,7 @@ public class SwipeView extends javax.swing.JFrame {
     tablePanel.setPreferredSize(new java.awt.Dimension(608, 395));
     tablePanel.setLayout(new javax.swing.OverlayLayout(tablePanel));
 
-    itensTable.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 30, 1, 90));
+    itensTable.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 55, 1, 95));
     itensTable.setMaximumSize(new java.awt.Dimension(608, 395));
     itensTable.setMinimumSize(new java.awt.Dimension(608, 395));
     itensTable.setOpaque(false);
