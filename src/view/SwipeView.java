@@ -31,7 +31,7 @@ public class SwipeView extends javax.swing.JFrame {
   }
 
   private void init() {
-    Letter letter = new Letter("R");
+    Letter letter = new Letter("A");
     letter.setLocation(900, 10);
     letterPanel.add(letter);
     Translation t = new Translation(letter, new Point(10, 10), 1400);

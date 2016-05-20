@@ -108,7 +108,7 @@ public class GameLabel extends JLabel {
         }//fim if-else
 
         //redesenhando o icone
-        graphics.drawImage(iconImage.getImage(), 0, 0, (int) wi, (int) hi, this);
+        graphics.drawImage(iconImage.getImage(), getWidth()/2-icon.getIconWidth()/2, 0, (int) wi, (int) hi, this);
     } //fim risezeIcon
 
     public double getWi() {
@@ -160,7 +160,7 @@ public class GameLabel extends JLabel {
             component.setSize((int)w, (int)h);
             
             if(center){
-                component.setLocation((this.getWidth()/2) - (int)component.getWi()/2, 
+                component.setLocation((this.getWidth()/2) - (int)component.getWidth()/2, 
                                       (this.getHeight()/2) - (int)component.getHi()/2);
                 System.out.println(getLocation());
             }
@@ -179,7 +179,7 @@ public class GameLabel extends JLabel {
             float old = alpha;
             alpha = value;
             firePropertyChange("alpha", old, alpha);//realiza a transição dos valores de alpha
-            repaint();//redesenha a label
+//            repaint();//redesenha a label
         }//fim if
     }//fim setAlpha
 
@@ -202,17 +202,6 @@ public class GameLabel extends JLabel {
         return getIcon() == null ? new Dimension(300, 300) : new Dimension(getIcon().getIconWidth(), getIcon().getIconHeight());
     }//fim getPreferredSize
 
-    /**
-     * Método que desenha a label com suas propriedades de alpha
-     *
-     * @param g
-     */
-    @Override
-    public void paint(Graphics g) {
-        Graphics2D g2d = (Graphics2D) g.create();
-        g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, getAlpha()));
-        super.paint(g2d);
-        g2d.dispose();
-    }//fim paint
+  
 
 }//fim class
