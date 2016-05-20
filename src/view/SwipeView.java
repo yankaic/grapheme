@@ -134,8 +134,8 @@ public class SwipeView extends javax.swing.JFrame {
    *    de transição dos exemplos das letras
    * @param label JLabel
    */  
-  public static void addTransitionLabels(JLabel label){
-      lowerCaseAnimation.add(label,0);
+  public static void addTransitionLabels(JLabel label, int index){
+      lowerCaseAnimation.add(label,index);
   }//fim addLabels
   
   public LowerCaseLetterAnimation getLowerCaseAnimetionPanel(){
