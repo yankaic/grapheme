@@ -31,7 +31,6 @@ import org.w3c.dom.UserDataHandler;
  */
 public class GameLabel extends JLabel {
 
-    private float alpha;//valor do alpha da label
     private Icon icon;
     private boolean center;
     private double wi;
@@ -40,23 +39,9 @@ public class GameLabel extends JLabel {
     /**
      * Construtor da classe
      */
-    public GameLabel() {
-        alpha = 1f;
+    public GameLabel() {   
     }//fim construtor
     
-    @Override
-    public void setIcon(Icon icon){
-        super.setIcon(null);
-        this.icon=icon;
-    }
-    
-    public Icon getImage(){
-        return icon;
-    }
-
-    public void setCenterAlignment(boolean center){
-        this.center=center;
-    }
     @Override
     public void paintComponent(Graphics gph) {
         super.paintComponent(gph);
@@ -69,7 +54,7 @@ public class GameLabel extends JLabel {
             resizeIcon(graphics);
         }//fim if
         if (getComponentCount() != 0) {
-            resizeComponents(graphics);
+            //resizeComponents(graphics);
         }//fim if
     }//fim paintComponent
 
@@ -108,19 +93,9 @@ public class GameLabel extends JLabel {
         }//fim if-else
 
         //redesenhando o icone
-        graphics.drawImage(iconImage.getImage(), getWidth()/2-icon.getIconWidth()/2, 0, (int) wi, (int) hi, this);
+        graphics.drawImage(iconImage.getImage(), 0, 0, (int) wi, (int) hi, this);
     } //fim risezeIcon
-
-    public double getWi() {
-        return wi;
-    }
-
-    public double getHi() {
-        return hi;
-    }
-    
-
-    
+  
     /**
      * Método que redimensiona os componentes da label, proporcionalmente ao
      * tamanho da label
@@ -157,51 +132,18 @@ public class GameLabel extends JLabel {
             }//fim if-else
 
             //redesenhando o icone
-            component.setSize((int)w, (int)h);
-            
-            if(center){
-                component.setLocation((this.getWidth()/2) - (int)component.getWidth()/2, 
-                                      (this.getHeight()/2) - (int)component.getHi()/2);
-                System.out.println(getLocation());
-            }
-            
-            //component.repaint();    
+            component.setSize((int)w, (int)h);            
         }//fim for
     } //fim risezeComponents
-
-    /**
-     * Método que modifica o valor de alpha da label e atualiza sua visualização
-     *
-     * @param value float : novo valor do alpha
-     */
-    public void setAlpha(float value) {
-        if (alpha != value) {
-            float old = alpha;
-            alpha = value;
-            firePropertyChange("alpha", old, alpha);//realiza a transição dos valores de alpha
-//            repaint();//redesenha a label
-        }//fim if
-    }//fim setAlpha
-
-    /**
-     * Método que retorna o valor de alpha da label
-     *
-     * @return alpha float
-     */
-    public float getAlpha() {
-        return alpha;
-    }//fim getAlpha
-
-    /**
-     * Método que retorna o tamanho da label
-     *
-     * @return Dimension
-     */
+ 
     @Override
-    public Dimension getPreferredSize() {
-        return getIcon() == null ? new Dimension(300, 300) : new Dimension(getIcon().getIconWidth(), getIcon().getIconHeight());
-    }//fim getPreferredSize
-
-  
+    public void setIcon(Icon icon){
+        super.setIcon(null);
+        this.icon=icon;
+    }//setIcon
+    
+    public Icon getImage(){
+        return icon;
+    }//getImage
 
 }//fim class
