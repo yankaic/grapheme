@@ -198,10 +198,10 @@ public class LetterTransition extends Thread {
                          - - - - - - -
                          - - - - - - -
                      */
-                    //audioSource = path + "audio.aiff";
-                    //audioClip = new AudioClip(audioSource);
-                    //audioClip.play();
-                    sleep(6000);
+                    audioSource = path + Integer.toString(countImages + 1) + Main.BAR + "audio.aiff";
+                    audioClip = new AudioClip(audioSource);
+                    audioClip.play();
+                    sleep(3000);
 
                     //calculando o delta de deslocamento da imagem para sua posicao final
                     int dw = image[countImages].getImage().getIconWidth() + 20;
