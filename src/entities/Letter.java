@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package view.components;
+package entities;
 
 import java.awt.MouseInfo;
 import java.awt.Point;
@@ -35,6 +35,8 @@ public class Letter extends JLabel {
     setName(name);
     init();
   }
+  
+  
 
   private void init() {
     try {
@@ -84,7 +86,6 @@ public class Letter extends JLabel {
             + getName().trim().toLowerCase() + bar
             + "uppercase" + bar;
     URL resource = getClass().getResource(path);
-    System.out.println(resource.toString());
     return resource.toString();
   }
 

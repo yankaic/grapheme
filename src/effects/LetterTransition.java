@@ -44,7 +44,7 @@ import javax.swing.OverlayLayout;
 import javax.swing.Timer;
 import view.LowerCaseLetterAnimation;
 import view.SwipeView;
-import view.components.Letter;
+import entities.Letter;
 
 /**
  *

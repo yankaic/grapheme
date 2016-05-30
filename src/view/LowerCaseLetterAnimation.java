@@ -20,7 +20,7 @@ import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.Timer;
-import view.components.Letter;
+import entities.Letter;
 
 /**
  *
