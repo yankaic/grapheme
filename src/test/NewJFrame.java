@@ -10,6 +10,7 @@ import entities.GameLabel;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import javax.swing.ImageIcon;
+import javax.swing.OverlayLayout;
 
 /**
  *
@@ -29,7 +30,7 @@ public class NewJFrame extends javax.swing.JFrame {
     
     GameLabel B = new GameLabel();
     B.setIcon(new ImageIcon(getClass().getResource("/letters/a/lowercase/examples/2/image.png")));
-    gameLabel.setLayout(new BorderLayout());
+    gameLabel.setLayout(new OverlayLayout(gameLabel));
     gameLabel.add(B);
     
     
