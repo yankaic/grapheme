@@ -12,14 +12,15 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.Timer;
 import view.components.Form;
-import view.components.Letter;
+import entities.Letter;
+import graphemes.Main;
 
 /**
  *
  * @author Yan Kaic
  */
 public class SwipeView extends javax.swing.JFrame {
-
+  private Letter letter;
   /**
    * Creates new form SwipeView
    */
@@ -27,19 +28,23 @@ public class SwipeView extends javax.swing.JFrame {
     initComponents();
     setLocationRelativeTo(null);
     setIconImage(new ImageIcon(getClass().getResource("/icons/fab.png")).getImage());
-    init();
+    letter = Main.gameControll.nextLetter();
+    addLetter(letter);
   }
 
-  private void init() {
-    Letter letter = new Letter("A");
-    letter.setLocation(900, 10);
-    letterPanel.add(letter);
-    Translation t = new Translation(letter, new Point(10, 10), 1400);
+  /**
+   * Método que adiciona uma nova letra na janela
+   * Ao mesmo tempo que adiciona todos os eventos pertinente as letras
+   * @param newLetter Letter : nova letra sendo adicionada na janela
+   */
+  private void addLetter(Letter newLetter) {
+    newLetter.setLocation(900, 10);
+    letterPanel.add(newLetter);
+    Translation t = new Translation(newLetter, new Point(10, 10), 1400);
     t.start();
-
-    letterEvents(letter);
+    letterEvents(newLetter);
     repaint();
-  }
+  }//fim addLetter
 
   private void letterEvents(Letter letter) {
     letter.addMouseListener(new MouseAdapter() {
@@ -53,8 +58,6 @@ public class SwipeView extends javax.swing.JFrame {
         letter.setOldLocation(location);
         letterPanel.remove(letter);
         topPanel.add(letter);
-            System.out.println("entrou");
-            System.out.println(letter.getLocation());
       }
 
       @Override

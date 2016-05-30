@@ -9,12 +9,14 @@ import entities.FadeComponent;
 import entities.GameLabel;
 import entities.GameObject;
 import graphemes.Main;
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -24,14 +26,25 @@ import java.util.logging.Logger;
 import javafx.scene.media.AudioClip;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
-
+import javax.sound.sampled.AudioFormat;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.BooleanControl;
+import javax.sound.sampled.BooleanControl.Type;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.Control;
+import javax.sound.sampled.DataLine;
+import javax.sound.sampled.FloatControl;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.OverlayLayout;
 import javax.swing.Timer;
 import view.LowerCaseLetterAnimation;
 import view.SwipeView;
-import view.components.Letter;
+import entities.Letter;
 
 /**
  *
@@ -63,7 +76,7 @@ public class LetterTransition extends Thread {
     private Dimension finalDimension;
 
     //audio da animação 
-    private AudioClip audioClip;
+    private Clip clip;
 
     //path do audio
     private String audioSource;
@@ -83,6 +96,12 @@ public class LetterTransition extends Thread {
     //variável que verifica de a animação está rodando
     private boolean isRunning;
 
+    //variável que armazena o tempo atual do audio
+    private long audioTime;
+
+    //variável que decide se oo audio irá ser reproduzido ou não
+    private boolean enabledAudio;
+
     /**
      * Método construtor da classe de animação da transição de uma letra
      *
@@ -94,20 +113,19 @@ public class LetterTransition extends Thread {
     public LetterTransition(Letter letter, Dimension viewDimension, boolean type) {
         this.letter = letter;//letra sendo animada
         this.type = type;//tipo da animação
-
+        this.audioTime = -1;//tempo inicial do audio em microsegundos
         //configurações default
         initialPosition = new Point(770, 150); //posição inicial das labels sendo animadas
         initialDimension = new Dimension(0, 0); //dimensão inicial da label
         finalDimension = new Dimension(255, 369);//dimensão final da label
         this.viewDimension = viewDimension;
-
+        enabledAudio = true;//habilita a reprodução de audio
     }//fim construtor
 
     /**
      * Construtor vazio do objeto
      */
     public LetterTransition() {
-
     }//fim construtor
 
     /**
@@ -132,18 +150,7 @@ public class LetterTransition extends Thread {
                 //caminho para as imagens dos exemplos
                 String path = letter.getLowerCasePath() + "examples" + Main.BAR;
 
-                //GameLabel panel = new GameLabel();
-                GameLabel panel = new GameLabel();
-                panel.setOpaque(true);
-                panel.setCenterAlignment(true);
-                panel.setBackground(Color.red);
-                panel.setSize(initialDimension);
-                panel.setLocation(initialPosition);
-                
-                finalDimension = new Dimension(900, 365);
-                finalPosition = new Point(viewDimension.width/2 - finalDimension.width/2, 
-                                          viewDimension.height/2 - finalDimension.height/2);
-                
+                //laço que inicializa as labels das imagens e seta seus icones
                 for (int countImages = 0; countImages < maxImages; countImages++) {
                     //icone do exemplo        
                     String fullPath = path + Integer.toString(countImages + 1) + Main.BAR + "image.png";//caminho da imagem
@@ -152,18 +159,46 @@ public class LetterTransition extends Thread {
                     //criando a label para a imagem
                     image[countImages] = new GameLabel();
                     image[countImages].setIcon(icon);//setando o icone da label
-                    image[countImages].setLocation(finalDimension.width/2 - icon.getIconWidth()/2,
-                                                    finalDimension.height/2 - icon.getIconHeight()/2);
-                    image[countImages].setSize(initialDimension);
-                    panel.add(image[countImages]);
                 }//fim for
-                
-                SwipeView.addTransitionLabels(panel, 0);
-                                
-                tranlation = Translation.move(panel, finalPosition, 3000);
-                resize = Resize.resize(panel, finalDimension, 3000);
-                sleep(3000);
-                panel.setCenterAlignment(false);
+
+                //laço que posiciona as imagens no centro da tela
+                for (int countImages = 0; countImages < image.length; countImages++) {
+                    //a primeira imagem parte da televisão na tela e se posiciona no centro da imagem, 
+                    // depois disso, todas as outras imagens são setadas ao fundo dessa primeira imagem
+                    //  centralizada
+                    if (countImages == 0) {
+                        //posição e dimensão iniciais da label
+                        image[countImages].setLocation(initialPosition);
+                        image[countImages].setSize(initialDimension);
+
+                        //calculando a posição final e a dimensão final
+                        finalDimension = new Dimension(image[countImages].getImage().getIconWidth(),
+                                image[countImages].getImage().getIconHeight());
+                        finalPosition = new Point((int) (viewDimension.width / 2) - (finalDimension.width / 2),
+                                (int) (viewDimension.height / 2) - (finalDimension.height / 2));
+
+                        //adicionando o exemplo na janela
+                        SwipeView.addTransitionLabels(image[countImages], countImages);
+
+                        //animando a translação e redimensionamento da label
+                        tranlation = Translation.move(image[countImages], finalPosition, 2000);
+                        resize = Resize.resize(image[countImages], finalDimension, 2000);
+                        // sleep(2500);
+                    } else {
+                        //posição das demais imagens
+                        while (!image[0].getLocation().equals(finalPosition)) {
+                            sleep(10);
+                        }//fim while
+                        ///System.out.println("aqui");
+                        image[countImages].setLocation(finalPosition);
+                        image[countImages].setSize(finalDimension);
+
+                        //adicionando o exemplo na janela
+                        SwipeView.addTransitionLabels(image[countImages], countImages);
+
+                    }//fim if-else
+                }//fim for
+
                 //laço que anima as imagens, juntamento com o audio e sua reorganização na tela
                 for (int countImages = 0; image != null && countImages < image.length; countImages++) {
 
@@ -178,128 +213,40 @@ public class LetterTransition extends Thread {
                          - - - - - - -
                          - - - - - - -
                      */
-
-                    //audioSource = path + "audio.aiff";
-                    //audioClip = new AudioClip(audioSource);
-                    //audioClip.play();
-                    sleep(6000);
-                    
+                    if (enabledAudio) {
+                        audioSource = path + Integer.toString(countImages + 1) + Main.BAR + "audio.aiff";
+                        loadClip(audioSource);
+                        clip.start();
+                    }//fim if
+                    sleep(3000);
                     //calculando o delta de deslocamento da imagem para sua posicao final
                     int dw = image[countImages].getImage().getIconWidth() + 20;
-                    
+
                     //diferenciando o delta de acordo com o indice da imagem
                     //serão colocados 3 imagem na tela por vez
-                    int delta = ((countImages+1)%3 == 1) ? -dw : //caso o indice da imagem
-                                                                 //  mod 3 seja igual a 1 (esquerda)
-                                ((countImages+1)%3 == 2) ?  dw : //caso o indice da imagem 
-                                                                 //  mod 3 seja igual a 2 (direita)
-                                0; //caso o indice da imagem mod 3 seja igual a 0 (centro)
-                    
+                    int delta = ((countImages + 1) % 3 == 1) ? -dw //caso o indice da imagem mod 3 seja igual a 1 (esquerda)
+                            : ((countImages + 1) % 3 == 2) ? dw //caso o indice da imagem mod 3 seja igual a 2 (direita)
+                                    : 0; //caso o indice da imagem mod 3 seja igual a 0 (centro)
+
                     //calcula a posicao final da imagem na animação
                     //   a imagem pode deslocar apenas no eixo x, a uma variação delta
-                    int x=image[countImages].getLocation().x + delta;
-                    int y=image[countImages].getLocation().y;
-                    finalPosition = new Point(x,y);
-                    
+                    int x = image[countImages].getLocation().x + delta;
+                    int y = image[countImages].getLocation().y;
+                    finalPosition = new Point(x, y);
+
                     //posicionando a imagem no local correto
-                    if(!image[countImages].getLocation().equals(finalPosition))
+                    if (countImages != image.length - 1) {
                         tranlation = Translation.move(image[countImages], finalPosition, 2000);
-                    sleep(2000);                    
+                    }//fim if
+                    sleep(2000);
                 }//fim for                
-//                
-//                //laço que inicializa as labels das imagens e seta seus icones
-//                for (int countImages = 0; countImages < maxImages; countImages++) {
-//                    //icone do exemplo        
-//                    String fullPath = path + Integer.toString(countImages + 1) + Main.BAR + "image.png";//caminho da imagem
-//                    ImageIcon icon = new ImageIcon(new URL(fullPath));//pegando a imagem do exemplo
-//
-//                    //criando a label para a imagem
-//                    image[countImages] = new GameLabel();
-//                    image[countImages].setIcon(icon);//setando o icone da label
-//                }//fim for
-//
-//                //laço que posiciona as imagens no centro da tela
-//                for (int countImages = 0; countImages < maxImages; countImages++) {
-//                    //a primeira imagem parte da televisão na tela e se posiciona no centro da imagem, 
-//                    // depois disso, todas as outras imagens são setadas ao fundo dessa primeira imagem
-//                    //  centralizada
-//                    if (countImages == 0) {
-//                        //posição e dimensão iniciais da label
-//                        image[countImages].setLocation(initialPosition);
-//                        image[countImages].setSize(initialDimension);
-//
-//                        //calculando a posição final e a dimensão final
-//                        finalDimension = new Dimension(image[countImages].getIcon().getIconWidth(),
-//                                image[countImages].getIcon().getIconHeight());
-//                        finalPosition = new Point((int) (viewDimension.width / 2) - (finalDimension.width / 2),
-//                                (int) (viewDimension.height / 2) - (finalDimension.height / 2));
-//
-//                        //adicionando o exemplo na janela
-//                        SwipeView.addTransitionLabels(image[countImages],countImages);
-//
-//                        //animando a translação e redimensionamento da label
-//                        tranlation = Translation.move(image[countImages], finalPosition, 2000);
-//                        resize = Resize.resize(image[countImages], finalDimension, 2000);
-//                        sleep(2500);
-//                    } else {
-//                        //posição das demais imagens
-//                        image[countImages].setLocation(finalPosition);
-//                        image[countImages].setSize(finalDimension);
-//                        
-//                        //adicionando o exemplo na janela
-//                        SwipeView.addTransitionLabels(image[countImages],countImages);
-//                    }//fim if-else
-//                }//fim for
-//
-//                //laço que anima as imagens, juntamento com o audio e sua reorganização na tela
-//                for (int countImages = 0; image != null && countImages < image.length; countImages++) {
-//
-//                    /*
-//                        A tela será dividida em três campos, conforme imagem abaixo.
-//                        Onde casa número corresponde à numeração do exemplo, em relação
-//                        a seu mod por 3.
-//
-//                         - - - - - - - 
-//                         - - - - - - -
-//                         - 1 - 0 - 2 -
-//                         - - - - - - -
-//                         - - - - - - -
-//                     */
-//
-//                    //audioSource = path + "audio.aiff";
-//                    //audioClip = new AudioClip(audioSource);
-//                    //audioClip.play();
-//                    sleep(6000);
-//                    
-//                    //calculando o delta de deslocamento da imagem para sua posicao final
-//                    int dw = image[countImages].getIcon().getIconWidth() + 20;
-//                    
-//                    //diferenciando o delta de acordo com o indice da imagem
-//                    //serão colocados 3 imagem na tela por vez
-//                    int delta = ((countImages+1)%3 == 1) ? -dw : //caso o indice da imagem
-//                                                                 //  mod 3 seja igual a 1 (esquerda)
-//                                ((countImages+1)%3 == 2) ?  dw : //caso o indice da imagem 
-//                                                                 //  mod 3 seja igual a 2 (direita)
-//                                0; //caso o indice da imagem mod 3 seja igual a 0 (centro)
-//                   
-//                    //calcula a posicao final da imagem na animação
-//                    //   a imagem pode deslocar apenas no eixo x, a uma variação delta
-//                    int x=image[countImages].getLocation().x + delta;
-//                    int y=image[countImages].getLocation().y;
-//                    finalPosition = new Point(x,y);
-//                    
-//                    //posicionando a imagem no local correto
-//                    tranlation = Translation.move(image[countImages], finalPosition, 2000);
-//                    sleep(2000);                    
-//                }//fim for                
-               sleep(5000);
+                sleep(5000);
             } //fim if-else
-        } catch (InterruptedException | URISyntaxException ex) {
+        } catch (InterruptedException | URISyntaxException | MalformedURLException ex) {
             Logger.getLogger(LetterTransition.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (MalformedURLException ex) {
+        } catch (LineUnavailableException | UnsupportedAudioFileException | IOException ex) {
             Logger.getLogger(LetterTransition.class.getName()).log(Level.SEVERE, null, ex);
         }//fim try-catch
-        
         isRunning = false;
         Timer closePanelAnimation = new Timer(1500, (ActionEvent e) -> {
             if (!isRunning) {
@@ -334,11 +281,31 @@ public class LetterTransition extends Thread {
     }//fim upperCaseLetter
 
     /**
+     * Método que carrega um audio para ser executado
+     *
+     * @param audioPath String : caminho do audio
+     * @throws LineUnavailableException
+     * @throws IOException
+     * @throws UnsupportedAudioFileException
+     * @throws URISyntaxException
+     */
+    private void loadClip(String audioPath) throws LineUnavailableException, IOException, UnsupportedAudioFileException, URISyntaxException {
+        File audioFile = new File(new URI(audioPath));
+        AudioInputStream audioStream = AudioSystem.getAudioInputStream(audioFile);
+        clip = AudioSystem.getClip();
+        clip.open(audioStream);
+    }//fim loadClip
+
+    /**
      * Método que pausa a animação
      */
     public void pause() {
         tranlation.suspend();
         resize.suspend();
+        if (clip.isRunning()) {
+            audioTime = clip.getMicrosecondLength();
+            clip.stop();
+        }//fim if
         this.suspend();
     }//fim pause
 
@@ -349,6 +316,11 @@ public class LetterTransition extends Thread {
         this.resume();
         resize.resume();
         tranlation.resume();
+        if (clip != null && audioTime > 0) {
+            clip.setMicrosecondPosition(audioTime);
+            clip.start();
+            audioTime = -1;
+        }//fim if
     }//fim play
 
     /**
@@ -372,14 +344,14 @@ public class LetterTransition extends Thread {
      * Método que habilita o audio da animação
      */
     public void enableAudio() {
-
+        enabledAudio = true;
     }//fim enableAudio
 
     /**
      * Método que desabilita o audio da animação
      */
     public void disableAudio() {
-
+        enabledAudio = false;
     }//fim disableAudio
 
     /**
@@ -397,6 +369,7 @@ public class LetterTransition extends Thread {
                 image[countImage].setVisible(false);
             }//fim if
         }//fim for
+        audioTime = -1;
         this.stop();
     }//fim close
 
