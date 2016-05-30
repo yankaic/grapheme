@@ -226,6 +226,7 @@ public class SwipeView extends javax.swing.JFrame {
     workPanel.setLayout(new java.awt.BorderLayout());
 
     letterPanel.setBackground(new java.awt.Color(234, 227, 212));
+    letterPanel.setOpaque(false);
     letterPanel.setPreferredSize(new java.awt.Dimension(860, 130));
 
     javax.swing.GroupLayout letterPanelLayout = new javax.swing.GroupLayout(letterPanel);
