@@ -15,16 +15,15 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * Classe que controla a dinâmica do jogo.
- *  Atribuições
- * - Cria, lê e salva a lista de caminhos das letras do jogo
- * - Mantém salvo o estágio do jogo
+ * Classe que controla a dinâmica do jogo. Atribuições - Cria, lê e salva a
+ * lista de caminhos das letras do jogo - Mantém salvo o estágio do jogo
+ *
  * @author shanks
  */
-public class Controller {
+public class Controller extends ArrayList<File> {
 
     //lista com o caminho das letras
-    public static ArrayList<File> pathLetters;
+    private ArrayList<String> pathLetters;
     
     //objeto para leitura de arquivo de texto
     private ObjectInputStream input;
@@ -42,9 +41,9 @@ public class Controller {
     public Controller() {
         pathLetters = new ArrayList<>();
         
-        //recuperando do arquivo os caminhos das letras
-        reloadFiles();
+        //recuperando do arquivo os caminhos das letra
         Collections.shuffle(pathLetters);//embaralhando o array 
+        
     }//fim construtor
 
 
@@ -53,12 +52,14 @@ public class Controller {
      * Esse método recria a lista com todos os grafemas encontrados na pasta letters
      * 
      */
-    public void restartListOfFiles() {
+    public void reloadLetters() {
         try {
             pathLetters = new ArrayList<>();//recria a lista de files
             File directoryLetters = new File(getClass().getResource(Main.BAR + "letters").toURI());//diretório dos files
             for (int i = 0; i < directoryLetters.list().length; i++) {
-                pathLetters.add(directoryLetters.listFiles()[i]);//recarregar os files
+                String nameLetter = directoryLetters.listFiles()[i].getName();
+                pathLetters.add(nameLetter);//recarregar os files
+                System.out.println(nameLetter);
             }//fim for      
             Collections.shuffle(pathLetters);
         } catch (URISyntaxException ex) {
@@ -71,12 +72,16 @@ public class Controller {
      * Método que lê o arquivo (save) do jogo e cria uma lista contendo os paths salvos nesse arquivo
      */
     @SuppressWarnings("unchecked")
-    private void reloadFiles() {
+    public void loadLetters() {
         try {
             File f = new File(getClass().getResource(Main.BAR + "files" + Main.BAR + "list.graphemes").toURI());
             inputStream = new FileInputStream(f);//stream para a leitura
+            //verifica se o arquivo está vazio
+            if(inputStream.available()==0){
+                return;
+            }//fim if
             input = new ObjectInputStream(inputStream);//stream para a leitura do objeto
-            pathLetters = (ArrayList<File>) input.readObject();//lê a lista atual do jogo
+            pathLetters = (ArrayList<String>) input.readObject();//lê a lista atual do jogo
             Collections.shuffle(pathLetters);
         } catch (URISyntaxException | ClassNotFoundException ex) {//caminho não encontrado
             Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
@@ -86,8 +91,10 @@ public class Controller {
             Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
         } finally {//fechando os streams
             try {
-                input.close();
-                inputStream.close();
+                if(input!=null)
+                    input.close();
+                if(inputStream!=null)
+                    inputStream.close();
             } catch (IOException ex) {
                 Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
             }//fim try-catch
@@ -99,9 +106,18 @@ public class Controller {
      * @return file File: caminho raiz de uma letra randômica
      *         null : se a lista estiver vazia
      */
-    public File getLetter(){
+    public String getLetter(){
        return (pathLetters.isEmpty()) ? null : pathLetters.remove(0);
     }//fim getLetter
+    
+    /**
+     * Método que verifica se o array de letras está vazio. Isso pode indicar que 
+     * o jogo acabou, ou que é a primeira vez
+     * @return 
+     */
+    public boolean isLettersEmpty(){
+        return pathLetters.isEmpty();
+    }//fim getLetters
     
     /**
      * Método que salva um lista de files em um arquivo

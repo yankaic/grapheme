@@ -12,14 +12,15 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.Timer;
 import view.components.Form;
-import view.components.Letter;
+import entities.Letter;
+import graphemes.Main;
 
 /**
  *
  * @author Yan Kaic
  */
 public class SwipeView extends javax.swing.JFrame {
-
+  private Letter letter;
   /**
    * Creates new form SwipeView
    */
@@ -27,19 +28,23 @@ public class SwipeView extends javax.swing.JFrame {
     initComponents();
     setLocationRelativeTo(null);
     setIconImage(new ImageIcon(getClass().getResource("/icons/fab.png")).getImage());
-    init();
+    letter = Main.gameControll.nextLetter();
+    addLetter(letter);
   }
 
-  private void init() {
-    Letter letter = new Letter("A");
-    letter.setLocation(900, 10);
-    letterPanel.add(letter);
-    Translation t = new Translation(letter, new Point(10, 10), 1400);
+  /**
+   * Método que adiciona uma nova letra na janela
+   * Ao mesmo tempo que adiciona todos os eventos pertinente as letras
+   * @param newLetter Letter : nova letra sendo adicionada na janela
+   */
+  private void addLetter(Letter newLetter) {
+    newLetter.setLocation(900, 10);
+    letterPanel.add(newLetter);
+    Translation t = new Translation(newLetter, new Point(10, 10), 1400);
     t.start();
-
-    letterEvents(letter);
+    letterEvents(newLetter);
     repaint();
-  }
+  }//fim addLetter
 
   private void letterEvents(Letter letter) {
     letter.addMouseListener(new MouseAdapter() {
@@ -53,8 +58,6 @@ public class SwipeView extends javax.swing.JFrame {
         letter.setOldLocation(location);
         letterPanel.remove(letter);
         topPanel.add(letter);
-            System.out.println("entrou");
-            System.out.println(letter.getLocation());
       }
 
       @Override
@@ -134,8 +137,8 @@ public class SwipeView extends javax.swing.JFrame {
    *    de transição dos exemplos das letras
    * @param label JLabel
    */  
-  public static void addTransitionLabels(JLabel label){
-      lowerCaseAnimation.add(label,0);
+  public static void addTransitionLabels(JLabel label, int index){
+      lowerCaseAnimation.add(label,index);
   }//fim addLabels
   
   public LowerCaseLetterAnimation getLowerCaseAnimetionPanel(){
@@ -162,8 +165,8 @@ public class SwipeView extends javax.swing.JFrame {
     tV1 = new view.components.TV();
     tablePanel = new javax.swing.JPanel();
     itensTable = new javax.swing.JPanel();
-    form1 = new view.components.Form();
-    form2 = new view.components.Form("U");
+    form1 = new view.components.Form("D");
+    form2 = new view.components.Form("R");
     form5 = new view.components.Form();
     form4 = new view.components.Form();
     form3 = new view.components.Form();
@@ -223,7 +226,6 @@ public class SwipeView extends javax.swing.JFrame {
     workPanel.setLayout(new java.awt.BorderLayout());
 
     letterPanel.setBackground(new java.awt.Color(234, 227, 212));
-    letterPanel.setOpaque(false);
     letterPanel.setPreferredSize(new java.awt.Dimension(860, 130));
 
     javax.swing.GroupLayout letterPanelLayout = new javax.swing.GroupLayout(letterPanel);
@@ -266,7 +268,7 @@ public class SwipeView extends javax.swing.JFrame {
     tablePanel.setPreferredSize(new java.awt.Dimension(608, 395));
     tablePanel.setLayout(new javax.swing.OverlayLayout(tablePanel));
 
-    itensTable.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 30, 1, 90));
+    itensTable.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 55, 1, 95));
     itensTable.setMaximumSize(new java.awt.Dimension(608, 395));
     itensTable.setMinimumSize(new java.awt.Dimension(608, 395));
     itensTable.setOpaque(false);

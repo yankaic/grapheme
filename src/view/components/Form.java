@@ -5,6 +5,7 @@
  */
 package view.components;
 
+import entities.Letter;
 import java.awt.MouseInfo;
 import java.awt.Point;
 import java.awt.Rectangle;

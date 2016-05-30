@@ -8,7 +8,7 @@ package test;
 import effects.LetterTransition;
 import java.awt.Point;
 import view.SwipeView;
-import view.components.Letter;
+import entities.Letter;
 
 /**
  *
