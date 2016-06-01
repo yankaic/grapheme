@@ -221,39 +221,6 @@
                 <Property name="horizontalGap" type="int" value="10"/>
                 <Property name="verticalGap" type="int" value="30"/>
               </Layout>
-              <SubComponents>
-                <Component class="view.components.Form" name="form1">
-                  <Properties>
-                    <Property name="toolTipText" type="java.lang.String" value=""/>
-                  </Properties>
-                  <AuxValues>
-                    <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new view.components.Form(&quot;D&quot;)"/>
-                  </AuxValues>
-                </Component>
-                <Component class="view.components.Form" name="form2">
-                  <Properties>
-                    <Property name="toolTipText" type="java.lang.String" value=""/>
-                  </Properties>
-                  <AuxValues>
-                    <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new view.components.Form(&quot;R&quot;)"/>
-                  </AuxValues>
-                </Component>
-                <Component class="view.components.Form" name="form5">
-                  <Properties>
-                    <Property name="toolTipText" type="java.lang.String" value=""/>
-                  </Properties>
-                </Component>
-                <Component class="view.components.Form" name="form4">
-                  <Properties>
-                    <Property name="toolTipText" type="java.lang.String" value=""/>
-                  </Properties>
-                </Component>
-                <Component class="view.components.Form" name="form3">
-                  <Properties>
-                    <Property name="toolTipText" type="java.lang.String" value=""/>
-                  </Properties>
-                </Component>
-              </SubComponents>
             </Container>
             <Container class="javax.swing.JPanel" name="backTable">
               <Properties>

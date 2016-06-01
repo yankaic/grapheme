@@ -14,6 +14,10 @@ import javax.swing.Timer;
 import view.components.Form;
 import entities.Letter;
 import graphemes.Main;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 /**
  *
@@ -40,6 +44,8 @@ public class SwipeView extends javax.swing.JFrame {
   private void addLetter(Letter newLetter) {
     newLetter.setLocation(900, 10);
     letterPanel.add(newLetter);
+    initForms();
+    
     Translation t = new Translation(newLetter, new Point(10, 10), 1400);
     t.start();
     letterEvents(newLetter);
@@ -165,11 +171,6 @@ public class SwipeView extends javax.swing.JFrame {
     tV1 = new view.components.TV();
     tablePanel = new javax.swing.JPanel();
     itensTable = new javax.swing.JPanel();
-    form1 = new view.components.Form("D");
-    form2 = new view.components.Form("R");
-    form5 = new view.components.Form();
-    form4 = new view.components.Form();
-    form3 = new view.components.Form();
     backTable = new javax.swing.JPanel();
     jLabel1 = new javax.swing.JLabel();
     backPanel = new javax.swing.JPanel();
@@ -275,22 +276,6 @@ public class SwipeView extends javax.swing.JFrame {
     itensTable.setOpaque(false);
     itensTable.setPreferredSize(new java.awt.Dimension(608, 395));
     itensTable.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 10, 30));
-
-    form1.setToolTipText("");
-    itensTable.add(form1);
-
-    form2.setToolTipText("");
-    itensTable.add(form2);
-
-    form5.setToolTipText("");
-    itensTable.add(form5);
-
-    form4.setToolTipText("");
-    itensTable.add(form4);
-
-    form3.setToolTipText("");
-    itensTable.add(form3);
-
     tablePanel.add(itensTable);
 
     backTable.setOpaque(false);
@@ -361,11 +346,6 @@ public class SwipeView extends javax.swing.JFrame {
   private javax.swing.JPanel backPanel;
   private javax.swing.JPanel backTable;
   private static javax.swing.JLabel fadeBackgroudLabel;
-  private view.components.Form form1;
-  private view.components.Form form2;
-  private view.components.Form form3;
-  private view.components.Form form4;
-  private view.components.Form form5;
   private javax.swing.JPanel itensTable;
   private javax.swing.JLabel jLabel1;
   private javax.swing.JPanel jPanel2;
@@ -377,4 +357,19 @@ public class SwipeView extends javax.swing.JFrame {
   private static javax.swing.JPanel transitionTopPanel;
   private javax.swing.JPanel workPanel;
   // End of variables declaration//GEN-END:variables
+
+  private void initForms() {
+    final int formsSize = 4;
+    Letter current = (Letter) letterPanel.getComponent(0);
+    ArrayList<Form> forms = new ArrayList<>();
+    forms.add(new Form(current.getName()));
+    Form received[] = Main.gameControll.nextForms(formsSize);
+    forms.addAll(Arrays.asList(received));
+    Collections.shuffle(forms);
+    
+    for (Form form : forms) {
+      itensTable.add(form);
+    }
+   
+  }
 }

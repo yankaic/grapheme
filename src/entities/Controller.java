@@ -110,6 +110,19 @@ public class Controller extends ArrayList<File> {
        return (pathLetters.isEmpty()) ? null : pathLetters.remove(0);
     }//fim getLetter
     
+    public String[] getLasts(int size){
+      String list[] = new String[size];
+      for (int i = 0; i < size; i++) {
+        try {
+          list[i] = pathLetters.get(i);
+        }
+        catch (ArrayIndexOutOfBoundsException e) {
+          list[i] = null;
+        }
+      }
+      return list;
+    }
+    
     /**
      * Método que verifica se o array de letras está vazio. Isso pode indicar que 
      * o jogo acabou, ou que é a primeira vez
