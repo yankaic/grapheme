@@ -32,8 +32,6 @@ public class SwipeView extends javax.swing.JFrame {
     initComponents();
     setLocationRelativeTo(null);
     setIconImage(new ImageIcon(getClass().getResource("/icons/fab.png")).getImage());
-    letter = Main.gameControll.nextLetter();
-    addLetter(letter);
   }
 
   /**
@@ -41,7 +39,8 @@ public class SwipeView extends javax.swing.JFrame {
    * Ao mesmo tempo que adiciona todos os eventos pertinente as letras
    * @param newLetter Letter : nova letra sendo adicionada na janela
    */
-  private void addLetter(Letter newLetter) {
+  public void addLetter(Letter newLetter) {
+    this.letter = newLetter;
     newLetter.setLocation(900, 10);
     letterPanel.add(newLetter);
     initForms();

@@ -19,7 +19,8 @@ public class GameControll {
   private Controller controllerLetters;//objeto que controla o estado do jogo
 
   public GameControll() {
-    controllerLetters = new Controller();
+    controllerLetters = new Controller();  
+    view = new SwipeView();
   }//fim contrutor
 
   public void initGame() {
@@ -28,48 +29,24 @@ public class GameControll {
 
     if (controllerLetters.isLettersEmpty()) {
       controllerLetters.reloadLetters();
-    }//fim if
-
+    }//fim if  
     //inicilizando a janela
-    /* Set the Nimbus look and feel */
-    //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-    /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-     */
-    try {
-      for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-        if ("Nimbus".equals(info.getName())) {
-          javax.swing.UIManager.setLookAndFeel(info.getClassName());
-          break;
-        }
-      }
-    }
-    catch (ClassNotFoundException ex) {
-      java.util.logging.Logger.getLogger(SwipeView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-    }
-    catch (InstantiationException ex) {
-      java.util.logging.Logger.getLogger(SwipeView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-    }
-    catch (IllegalAccessException ex) {
-      java.util.logging.Logger.getLogger(SwipeView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-    }
-    catch (javax.swing.UnsupportedLookAndFeelException ex) {
-      java.util.logging.Logger.getLogger(SwipeView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-    }
-    //</editor-fold>
-
     /* Create and display the form */
     java.awt.EventQueue.invokeLater(new Runnable() {
       public void run() {
-        new SwipeView().setVisible(true);
+        view = new SwipeView();
+        view.setVisible(true);
       }//fim run
     });
   }//fim initGame
 
+  /**
+   * Método que retorna a próxima letra do jogo
+   * @return letter Letter
+   */
   public Letter nextLetter() {
-
     Letter letter = new Letter(controllerLetters.getLetter());
-
+    view.addLetter(letter);
     return letter;
   }//fim nextLetter
 

@@ -371,6 +371,17 @@ public class LetterTransition extends Thread {
         }//fim for
         audioTime = -1;
         this.stop();
+        Timer nextLetter = new Timer(1000, (ActionEvent e) -> {
+            try {
+                sleep(1000);             
+                Main.gameControll.nextLetter();
+            } catch (InterruptedException ex) {
+                Logger.getLogger(LetterTransition.class.getName()).log(Level.SEVERE, null, ex);
+            }//fim try-catch
+        });//fim timer
+        
+        nextLetter.setRepeats(false);
+        nextLetter.start();
     }//fim close
 
     /**
