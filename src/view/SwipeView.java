@@ -32,8 +32,6 @@ public class SwipeView extends javax.swing.JFrame {
     initComponents();
     setLocationRelativeTo(null);
     setIconImage(new ImageIcon(getClass().getResource("/icons/fab.png")).getImage());
-    letter = Main.gameControll.nextLetter();
-    addLetter(letter);
   }
 
   /**
@@ -41,9 +39,10 @@ public class SwipeView extends javax.swing.JFrame {
    * Ao mesmo tempo que adiciona todos os eventos pertinente as letras
    * @param letter Letter : nova letra sendo adicionada na janela
    */
-  private void addLetter(Letter letter) {
-    letter.setLocation(900, 10);
-    letterPanel.add(letter);
+  public void addLetter(Letter newLetter) {
+    this.letter = newLetter;
+    newLetter.setLocation(900, 10);
+    letterPanel.add(newLetter);
     initForms();
     
     Translation t = new Translation(letter, new Point(10, 10), 1400);
@@ -363,14 +362,16 @@ public class SwipeView extends javax.swing.JFrame {
     final int formsSize = 4;
     Letter current = (Letter) letterPanel.getComponent(0);
     ArrayList<Form> forms = new ArrayList<>();
-    forms.add(new Form(current.getName()));
+    forms.add(new Form(current);
     Form received[] = Main.gameControll.nextForms(formsSize);
     forms.addAll(Arrays.asList(received));
     Collections.shuffle(forms);
     
+    itensTable.removeAll();
     for (Form form : forms) {
       itensTable.add(form);
     }
+    itensTable.repaint();
    
   }
 }

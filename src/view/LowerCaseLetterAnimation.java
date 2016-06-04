@@ -214,7 +214,7 @@ public class LowerCaseLetterAnimation extends javax.swing.JPanel {
         LetterTransition.fade(fadeComponent, 0.7f, visibility);
 
         //timer para tornar visivel os controles da animação
-        Timer t1 = new Timer((visibility) ? 500 : 1000, (ActionEvent e) -> {
+        Timer t1 = new Timer((visibility) ? 500 : 700, (ActionEvent e) -> {
             controlPanel.setVisible(visibility);
         });
         t1.setRepeats(false);
