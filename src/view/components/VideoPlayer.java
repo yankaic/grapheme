@@ -14,6 +14,7 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
 import javax.swing.JApplet;
+import javax.swing.JPanel;
 
 /**
  * Modulo onde o player de video e inicializado, ferramenta visual feita em
@@ -56,9 +57,9 @@ public class VideoPlayer extends JApplet {
         panel = new JFXPanel();
         add(panel, BorderLayout.CENTER);
         // create JavaFX scene
-//        Platform.runLater(() -> {
-  //          createScene();
-    //    });
+        Platform.runLater(() -> {
+            createScene();
+        });
     }
 
     /**
@@ -67,26 +68,26 @@ public class VideoPlayer extends JApplet {
      * @param url String contendo o endereco url do video.
      */
     public void setSourceMedia(String url) {
-//        media = new Media(url);
-//        mediaPlayer = new MediaPlayer(media);
-//        mediaView.setMediaPlayer(mediaPlayer);
+        media = new Media(url);
+        mediaPlayer = new MediaPlayer(media);
+        mediaView.setMediaPlayer(mediaPlayer);
     }
 
     /**
      * Cria o cenario necessario para organizar os componentes do JavaFX.
      */
     private void createScene() {
-// //       media = new Media(url); // 1
-////        mediaPlayer = new MediaPlayer(media); // 2
-//  //      mediaView = new MediaView(mediaPlayer); // 3
-//   //     mediaView.setFitHeight(125);
-//     //   mediaView.setPreserveRatio(true);
-//       // mediaView.autosize();
-//
-//        StackPane raiz = new StackPane();
-//        raiz.getChildren().add(mediaView); // 4
-//        Scene cena = new Scene(raiz);
-//        panel.setScene(cena);
+        media = new Media(url); // 1
+        mediaPlayer = new MediaPlayer(media); // 2
+        mediaView = new MediaView(mediaPlayer); // 3
+        mediaView.setFitHeight(getPreferredSize().height);
+        mediaView.setPreserveRatio(true);
+        mediaView.autosize();
+
+        StackPane raiz = new StackPane();
+        raiz.getChildren().add(mediaView); // 4
+        Scene cena = new Scene(raiz);
+        panel.setScene(cena);
     }
 
     /**

@@ -5,6 +5,8 @@
  */
 package test;
 
+import view.components.VideoPane;
+
 
 /**
  *
@@ -17,6 +19,9 @@ public class ReziseTest extends javax.swing.JFrame {
    */
   public ReziseTest() {
     initComponents();
+    VideoPane pane = new VideoPane();
+    add(pane);
+    
   }
 
   /**
@@ -29,100 +34,22 @@ public class ReziseTest extends javax.swing.JFrame {
   private void initComponents() {
 
     buttonGroup1 = new javax.swing.ButtonGroup();
-    form1 = new view.components.Form();
-    jPanel1 = new javax.swing.JPanel();
-    jRadioButton1 = new javax.swing.JRadioButton();
-    jRadioButton2 = new javax.swing.JRadioButton();
-    jRadioButton3 = new javax.swing.JRadioButton();
 
     setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-    jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Propriedades"));
-
-    buttonGroup1.add(jRadioButton1);
-    jRadioButton1.setText("recuse");
-    jRadioButton1.addActionListener(new java.awt.event.ActionListener() {
-      public void actionPerformed(java.awt.event.ActionEvent evt) {
-        jRadioButton1ActionPerformed(evt);
-      }
-    });
-
-    buttonGroup1.add(jRadioButton2);
-    jRadioButton2.setText("normal");
-    jRadioButton2.addActionListener(new java.awt.event.ActionListener() {
-      public void actionPerformed(java.awt.event.ActionEvent evt) {
-        jRadioButton2ActionPerformed(evt);
-      }
-    });
-
-    buttonGroup1.add(jRadioButton3);
-    jRadioButton3.setText("accepted");
-    jRadioButton3.addActionListener(new java.awt.event.ActionListener() {
-      public void actionPerformed(java.awt.event.ActionEvent evt) {
-        jRadioButton3ActionPerformed(evt);
-      }
-    });
-
-    javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-    jPanel1.setLayout(jPanel1Layout);
-    jPanel1Layout.setHorizontalGroup(
-      jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addGroup(jPanel1Layout.createSequentialGroup()
-        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-          .addComponent(jRadioButton1)
-          .addComponent(jRadioButton2)
-          .addComponent(jRadioButton3))
-        .addGap(0, 66, Short.MAX_VALUE))
-    );
-    jPanel1Layout.setVerticalGroup(
-      jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addGroup(jPanel1Layout.createSequentialGroup()
-        .addContainerGap()
-        .addComponent(jRadioButton1)
-        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-        .addComponent(jRadioButton2)
-        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-        .addComponent(jRadioButton3)
-        .addContainerGap(139, Short.MAX_VALUE))
-    );
 
     javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
     getContentPane().setLayout(layout);
     layout.setHorizontalGroup(
       layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addGroup(layout.createSequentialGroup()
-        .addContainerGap()
-        .addComponent(form1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 130, Short.MAX_VALUE)
-        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-        .addContainerGap())
+      .addGap(0, 416, Short.MAX_VALUE)
     );
     layout.setVerticalGroup(
       layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addGroup(layout.createSequentialGroup()
-        .addContainerGap()
-        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-          .addGroup(layout.createSequentialGroup()
-            .addComponent(form1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addGap(0, 0, Short.MAX_VALUE))
-          .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        .addContainerGap())
+      .addGap(0, 266, Short.MAX_VALUE)
     );
 
     pack();
   }// </editor-fold>//GEN-END:initComponents
-
-  private void jRadioButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton1ActionPerformed
-    form1.recuse();
-  }//GEN-LAST:event_jRadioButton1ActionPerformed
-
-  private void jRadioButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton2ActionPerformed
-    form1.normalize();    // TODO add your handling code here:
-  }//GEN-LAST:event_jRadioButton2ActionPerformed
-
-  private void jRadioButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton3ActionPerformed
-    form1.accept();    // TODO add your handling code here:
-  }//GEN-LAST:event_jRadioButton3ActionPerformed
 
   /**
    * @param args the command line arguments
@@ -163,10 +90,5 @@ public class ReziseTest extends javax.swing.JFrame {
 
   // Variables declaration - do not modify//GEN-BEGIN:variables
   private javax.swing.ButtonGroup buttonGroup1;
-  private view.components.Form form1;
-  private javax.swing.JPanel jPanel1;
-  private javax.swing.JRadioButton jRadioButton1;
-  private javax.swing.JRadioButton jRadioButton2;
-  private javax.swing.JRadioButton jRadioButton3;
   // End of variables declaration//GEN-END:variables
 }
