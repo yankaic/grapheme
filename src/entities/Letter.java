@@ -25,14 +25,19 @@ import javax.swing.JLabel;
 public class Letter extends JLabel {
 
   private Point oldLocation;
-
+  private boolean lowercase;
+  
   public Letter() {
     this("A");
   }
 
   public Letter(String name) {
     super();
+    
     setName(name);
+    
+    
+    
     init();
   }
   
@@ -41,7 +46,11 @@ public class Letter extends JLabel {
   private void init() {
     try {
       String letter = getName().toLowerCase();
-      ImageIcon icon = new ImageIcon(new URL(getUpperCasePath() + "letter.png"));
+      
+      lowercase = letter.equals(getName());
+      
+      ImageIcon icon = new ImageIcon(new URL(((lowercase) ? getLowerCasePath() : getUpperCasePath()) 
+                                          + "letter.png"));
       setIcon(icon);
       setSize(icon.getIconWidth(), icon.getIconHeight());
 
@@ -90,7 +99,7 @@ public class Letter extends JLabel {
   }
 
   public boolean isLowerCaseLetter() {
-    return true;
+    return lowercase;
   }
 
 }

@@ -24,22 +24,27 @@ public class Form extends JLabel {
   private JLabel mask;
   private ImageIcon acceptedIcon;
   private ImageIcon recusedIcon;
-
+  private Letter letter;
+  
   public Form() {
-    this("A");
+    this(new Letter("A"));
   }
 
-  public Form(String name) {
+  public Form(Letter letter) {
     super();
-    setName(name);
+    this.letter=letter;
     init();
   }
 
   private void init() {
-    String letter = getName().toLowerCase();
-    ImageIcon icon = new ImageIcon(getClass().getResource("/letters/" + letter + "/uppercase/form.png"));
-    acceptedIcon = new ImageIcon(getClass().getResource("/letters/" + letter + "/uppercase/form_yes.png"));
-    recusedIcon = new ImageIcon(getClass().getResource("/letters/" + letter + "/uppercase/form_no.png"));
+    String path = (letter.isLowerCaseLetter()) ? letter.getLowerCasePath(): 
+                                                 letter.getUpperCasePath();
+    String letterCase = (letter.isLowerCaseLetter()) ? "lowercase" : "uppercase";
+    
+    ImageIcon icon = new ImageIcon(getClass().getResource(path + letterCase +"/form.png"));
+    acceptedIcon = new ImageIcon(getClass().getResource(path + letterCase +"/form_yes.png"));
+    recusedIcon = new ImageIcon(getClass().getResource(path + letterCase +"/form_no.png"));
+    
     setIcon(icon);
     setSize(icon.getIconWidth(), icon.getIconHeight());
     mask = new JLabel();
