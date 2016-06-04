@@ -39,16 +39,16 @@ public class SwipeView extends javax.swing.JFrame {
   /**
    * Método que adiciona uma nova letra na janela
    * Ao mesmo tempo que adiciona todos os eventos pertinente as letras
-   * @param newLetter Letter : nova letra sendo adicionada na janela
+   * @param letter Letter : nova letra sendo adicionada na janela
    */
-  private void addLetter(Letter newLetter) {
-    newLetter.setLocation(900, 10);
-    letterPanel.add(newLetter);
+  private void addLetter(Letter letter) {
+    letter.setLocation(900, 10);
+    letterPanel.add(letter);
     initForms();
     
-    Translation t = new Translation(newLetter, new Point(10, 10), 1400);
+    Translation t = new Translation(letter, new Point(10, 10), 1400);
     t.start();
-    letterEvents(newLetter);
+    letterEvents(letter);
     repaint();
   }//fim addLetter
 
@@ -64,6 +64,7 @@ public class SwipeView extends javax.swing.JFrame {
         letter.setOldLocation(location);
         letterPanel.remove(letter);
         topPanel.add(letter);
+        topPanel.repaint();
       }
 
       @Override
