@@ -6,6 +6,10 @@
 package view.components;
 
 import java.awt.BorderLayout;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.application.Platform;
 import javafx.embed.swing.JFXPanel;
 import javafx.scene.Scene;
@@ -35,7 +39,7 @@ public class VideoPlayer extends JApplet {
      * Construtor sem parametros, inicia o player com um video default.
      */
     public VideoPlayer() {
-        this.url = getClass().getResource("/videos/video.mp4").toString();
+        // this.url = getClass().getResource("/videos/video.mp4").toString();
     }
 
     /**
@@ -71,6 +75,7 @@ public class VideoPlayer extends JApplet {
         media = new Media(url);
         mediaPlayer = new MediaPlayer(media);
         mediaView.setMediaPlayer(mediaPlayer);
+
     }
 
     /**

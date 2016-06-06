@@ -58,8 +58,8 @@ public class Controller extends ArrayList<File> {
             File directoryLetters = new File(getClass().getResource(Main.BAR + "letters").toURI());//diretório dos files
             for (int i = 0; i < directoryLetters.list().length; i++) {
                 String nameLetter = directoryLetters.listFiles()[i].getName();
-                pathLetters.add(nameLetter);//recarregar os files
-                System.out.println(nameLetter);
+                pathLetters.add(nameLetter.toLowerCase());//recarregar os files
+                pathLetters.add(nameLetter.toUpperCase());//recarregar os files
             }//fim for      
             Collections.shuffle(pathLetters);
         } catch (URISyntaxException ex) {
@@ -74,8 +74,10 @@ public class Controller extends ArrayList<File> {
     @SuppressWarnings("unchecked")
     public void loadLetters() {
         try {
-            File f = new File(getClass().getResource(Main.BAR + "files" + Main.BAR + "list.graphemes").toURI());
+            File f = new File(getClass().getResource( Main.BAR + "files" + Main.BAR + "list.graphemes").toURI());
+            
             inputStream = new FileInputStream(f);//stream para a leitura
+            
             //verifica se o arquivo está vazio
             if(inputStream.available()==0){
                 return;
@@ -83,13 +85,14 @@ public class Controller extends ArrayList<File> {
             input = new ObjectInputStream(inputStream);//stream para a leitura do objeto
             pathLetters = (ArrayList<String>) input.readObject();//lê a lista atual do jogo
             Collections.shuffle(pathLetters);
-        } catch (URISyntaxException | ClassNotFoundException ex) {//caminho não encontrado
-            Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
         } catch (FileNotFoundException ex) {//arquivo não encontrado
             Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {//erro na leitura
+        } catch (IOException | ClassNotFoundException ex) {//erro na leitura
             Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {//fechando os streams
+        } catch (URISyntaxException ex) {
+            Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
+        }       
+        finally {//fechando os streams
             try {
                 if(input!=null)
                     input.close();

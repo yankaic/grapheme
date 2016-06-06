@@ -54,7 +54,7 @@ public class GameControll {
     Form forms[] = new Form[size];
     String names[] = controllerLetters.getLasts(size);
     for (int i = 0; i < size; i++) {
-      forms[i] = new Form(names[i]);
+      forms[i] = new Form(new Letter(names[i]));
     }
     return forms;
   }

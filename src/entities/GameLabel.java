@@ -53,9 +53,6 @@ public class GameLabel extends JLabel {
         if (icon != null) {
             resizeIcon(graphics);
         }//fim if
-        if (getComponentCount() != 0) {
-            //resizeComponents(graphics);
-        }//fim if
     }//fim paintComponent
 
     /**

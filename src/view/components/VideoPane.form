@@ -2,7 +2,7 @@
 
 <Form version="1.3" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JPanelFormInfo">
   <NonVisualComponents>
-    <Container class="view.components.VideoPlayer" name="videoPlayer1">
+    <Container class="view.components.VideoPlayer" name="videoPlayer">
 
       <Layout>
         <DimensionLayout dim="0">

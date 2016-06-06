@@ -5,13 +5,19 @@
  */
 package view.components;
 
+import effects.Translation;
 import entities.Letter;
+import java.awt.Color;
 import java.awt.MouseInfo;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
@@ -33,23 +39,25 @@ public class Form extends JLabel {
   public Form(Letter letter) {
     super();
     this.letter=letter;
+    setName(letter.getName());
     init();
   }
 
   private void init() {
-    String path = (letter.isLowerCaseLetter()) ? letter.getLowerCasePath(): 
-                                                 letter.getUpperCasePath();
-    String letterCase = (letter.isLowerCaseLetter()) ? "lowercase" : "uppercase";
-    
-    ImageIcon icon = new ImageIcon(getClass().getResource(path + letterCase +"/form.png"));
-    acceptedIcon = new ImageIcon(getClass().getResource(path + letterCase +"/form_yes.png"));
-    recusedIcon = new ImageIcon(getClass().getResource(path + letterCase +"/form_no.png"));
-    
-    setIcon(icon);
-    setSize(icon.getIconWidth(), icon.getIconHeight());
-    mask = new JLabel();
-    mask.setSize(getSize());
-    add(mask);
+      try {
+          String path = (letter.isLowerCaseLetter()) ? letter.getLowerCasePath():
+                                                       letter.getUpperCasePath();          
+          ImageIcon icon = new ImageIcon(new URL(path +"form.png"));
+          acceptedIcon = new ImageIcon(new URL(path  +"form_yes.png"));
+          recusedIcon = new ImageIcon(new URL(path +"form_no.png"));
+          setIcon(icon);
+          setSize(icon.getIconWidth(), icon.getIconHeight());
+          mask = new JLabel();
+          mask.setSize(getSize());
+          add(mask);
+      } catch (MalformedURLException ex) {
+          Logger.getLogger(Form.class.getName()).log(Level.SEVERE, null, ex);
+      }
   }
 
   public void recuse() {
@@ -84,7 +92,8 @@ public class Form extends JLabel {
     normalize();
     return false;
   }
-
+  
+ 
   public boolean isCompatible(Letter letter) {
     return getName().equals(letter.getName());
   }

@@ -42,7 +42,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.OverlayLayout;
 import javax.swing.Timer;
-import view.LowerCaseLetterAnimation;
+import view.components.LowerCaseLetterAnimation;
 import view.SwipeView;
 import entities.Letter;
 
