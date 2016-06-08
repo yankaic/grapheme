@@ -16,6 +16,7 @@ public class VideoPane extends javax.swing.JPanel {
    */
   public VideoPane() {
     initComponents();
+    videoPlayer.init();
   }
 
   /**

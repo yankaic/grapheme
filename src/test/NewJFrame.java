@@ -20,7 +20,7 @@ public class NewJFrame extends javax.swing.JFrame {
         initComponents();
         Letter l = new Letter("A");
         System.out.println(l.getUpperCasePath()+"video.ogg");
-        videoPane1.setSourceMedia(l.getUpperCasePath()+"video.ogg");
+//        videoPane1.setSourceMedia(l.getUpperCasePath()+"video.ogg");
     }
 
     /**

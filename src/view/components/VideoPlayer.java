@@ -39,7 +39,7 @@ public class VideoPlayer extends JApplet {
      * Construtor sem parametros, inicia o player com um video default.
      */
     public VideoPlayer() {
-        // this.url = getClass().getResource("/videos/video.mp4").toString();
+        this.url = getClass().getResource("/videos/video.mp4").toString();
     }
 
     /**
@@ -93,6 +93,7 @@ public class VideoPlayer extends JApplet {
         raiz.getChildren().add(mediaView); // 4
         Scene cena = new Scene(raiz);
         panel.setScene(cena);
+        mediaPlayer.play();
     }
 
     /**
