@@ -5,15 +5,10 @@
  */
 package view.components;
 
-import effects.Translation;
 import entities.Letter;
-import java.awt.Color;
-import java.awt.MouseInfo;
-import java.awt.Point;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.Rectangle;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseMotionAdapter;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.logging.Level;
@@ -31,33 +26,42 @@ public class Form extends JLabel {
   private ImageIcon acceptedIcon;
   private ImageIcon recusedIcon;
   private Letter letter;
-  
-  public Form() {
-    this(new Letter("A"));
-  }
+  private static final int ICON_WIDTH = 202;
 
-  public Form(Letter letter) {
-    super();
-    this.letter=letter;
+  public Form() {
+    this.letter = new Letter("A");
     setName(letter.getName());
     init();
   }
 
+  public Form(Letter letter) {
+    super();
+    this.letter = letter;
+    setName(letter.getName());
+    init();
+    setVisible(false);
+  }
+
   private void init() {
-      try {
-          String path = (letter.isLowerCaseLetter()) ? letter.getLowerCasePath():
-                                                       letter.getUpperCasePath();          
-          ImageIcon icon = new ImageIcon(new URL(path +"form.png"));
-          acceptedIcon = new ImageIcon(new URL(path  +"form_yes.png"));
-          recusedIcon = new ImageIcon(new URL(path +"form_no.png"));
-          setIcon(icon);
-          setSize(icon.getIconWidth(), icon.getIconHeight());
-          mask = new JLabel();
-          mask.setSize(getSize());
-          add(mask);
-      } catch (MalformedURLException ex) {
-          Logger.getLogger(Form.class.getName()).log(Level.SEVERE, null, ex);
-      }
+    try {
+      String path = (letter.isLowerCaseLetter()) ? letter.getLowerCasePath()
+              : letter.getUpperCasePath();
+      ImageIcon icon = new ImageIcon(new URL(path + "form.png"));
+      acceptedIcon = new ImageIcon(new URL(path + "form_yes.png"));
+      recusedIcon = new ImageIcon(new URL(path + "form_no.png"));
+      setIcon(icon);
+      setSize(ICON_WIDTH, icon.getIconHeight());
+//      setPreferredSize(getSize());
+      setHorizontalAlignment(CENTER);
+      setLayout(new BorderLayout());
+      mask = new JLabel();
+      mask.setSize(getSize());
+      mask.setHorizontalAlignment(CENTER);
+      add(mask);
+    }
+    catch (MalformedURLException ex) {
+      Logger.getLogger(Form.class.getName()).log(Level.SEVERE, null, ex);
+    }
   }
 
   public void recuse() {
@@ -92,8 +96,7 @@ public class Form extends JLabel {
     normalize();
     return false;
   }
-  
- 
+
   public boolean isCompatible(Letter letter) {
     return getName().equals(letter.getName());
   }

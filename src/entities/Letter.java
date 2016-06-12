@@ -32,12 +32,8 @@ public class Letter extends JLabel {
   }
 
   public Letter(String name) {
-    super();
-    
-    setName(name);
-    
-    
-    
+    super();    
+    setName(name);   
     init();
   }
   
@@ -53,6 +49,8 @@ public class Letter extends JLabel {
                                           + "letter.png"));
       setIcon(icon);
       setSize(icon.getIconWidth(), icon.getIconHeight());
+      setHorizontalAlignment(CENTER);
+      setVerticalAlignment(CENTER);
 
       addMouseMotionListener(new MouseMotionAdapter() {
         @Override
