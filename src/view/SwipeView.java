@@ -46,7 +46,7 @@ public class SwipeView extends javax.swing.JFrame {
    * Método que adiciona uma nova letra na janela Ao mesmo tempo que adiciona
    * todos os eventos pertinente as letras
    *
-   * @param letter Letter : nova letra sendo adicionada na janela
+   * @param newLetter
    */
   public void addLetter(Letter newLetter) {
     this.letter = newLetter;
